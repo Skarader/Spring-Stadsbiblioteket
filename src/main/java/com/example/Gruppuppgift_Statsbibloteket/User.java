@@ -15,16 +15,14 @@ public class User {
     private String email;
     private boolean isAdmin = false; // try difference between adding a bool vs useing adminclass.
     private int borrowerId;
-    private List<Book> borrowedBooks = new ArrayList();
+    private List<Book> borrowedBooks;
 
-    public User(int userId, String firstName, String lastName, String email, boolean isAdmin,
-            List<Book> borrowedBooks) {
+    public User(int userId, String firstName, String lastName, String email, boolean isAdmin) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.isAdmin = isAdmin;
-        this.borrowedBooks = borrowedBooks;
-
+        this.borrowedBooks = new ArrayList<>();
     }
 }
