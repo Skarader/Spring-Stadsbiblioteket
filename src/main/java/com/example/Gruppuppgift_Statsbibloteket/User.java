@@ -13,7 +13,7 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
-    private boolean isAdmin = false;
+    private boolean isAdmin = false; // try difference between adding a bool vs useing adminclass.
     private int borrowerId;
     private List<Book> borrowedBooks = new ArrayList();
 
