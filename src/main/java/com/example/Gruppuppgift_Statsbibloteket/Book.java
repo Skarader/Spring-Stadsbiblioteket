@@ -1,40 +1,21 @@
 package com.example.Gruppuppgift_Statsbibloteket;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class Book {
     private String title;
     private String author;
     private String ISBN;
     private boolean isAvalible;
 
-    public String getTitle() {
-        return title;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public String getISBN() {
-        return ISBN;
-    }
-
-    public boolean getIsAvalible() {
-        return isAvalible;
-    }
-
-    public void setTitle(String title) {
+    public Book(String title, String author, String ISBN, boolean isAvalible) {
         this.title = title;
-    }
-
-    public void setAuthor(String author) {
         this.author = author;
-    }
-
-    public void setISBN(String ISBN) {
         this.ISBN = ISBN;
-    }
-
-    public void setIsAvalible(boolean isAvalible) {
         this.isAvalible = isAvalible;
     }
+
 }
