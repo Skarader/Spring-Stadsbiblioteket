@@ -9,6 +9,7 @@ import com.example.Gruppuppgift_Statsbibloteket.model.Author;
 import com.example.Gruppuppgift_Statsbibloteket.model.Book;
 import com.example.Gruppuppgift_Statsbibloteket.model.BookDTO;
 import com.example.Gruppuppgift_Statsbibloteket.service.AuthorService;
+import com.example.Gruppuppgift_Statsbibloteket.service.AuthorService;
 import com.example.Gruppuppgift_Statsbibloteket.service.BookService;
 
 import java.util.List;
@@ -43,20 +44,21 @@ public class BookController {
     @PostMapping
     public ResponseEntity<Book> createBook(@RequestBody BookDTO bookDTO) {
         Optional<Author> author = authorService.getAuthorById(bookDTO.getAuthorId());
-
+    
         if (author.isPresent()) {
             Book book = new Book();
             book.setTitle(bookDTO.getTitle());
             book.setPublicationYear(bookDTO.getPublicationYear());
             book.setAvailable(bookDTO.getAvailable());
-            book.setAuthor(author.get());
-
+            book.setAuthor(author.get()); // Set the actual Author entity here
+    
             Book savedBook = bookService.saveBook(book);
             return new ResponseEntity<>(savedBook, HttpStatus.CREATED);
         } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // Author not found
         }
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<Book> updateBook(@PathVariable Long id, @RequestBody Book bookDetails) {
