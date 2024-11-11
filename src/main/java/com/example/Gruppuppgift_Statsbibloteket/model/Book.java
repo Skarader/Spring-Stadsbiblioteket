@@ -1,40 +1,38 @@
-package com.example.Gruppuppgift_Statsbibloteket;
+package com.example.Gruppuppgift_Statsbibloteket.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
+
+@Entity
+@Getter
+@Setter
+@Table(name = "books")
 public class Book {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long bookId;
+
     private String title;
-    private String author;
-    private String ISBN;
-    private boolean isAvalible;
+    private Integer publicationYear;
+    private Boolean available;
 
-    public String getTitle() {
-        return title;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "author_id")
+    @JsonBackReference
+    private Author author;
+
+    public Book() {
     }
 
-    public String getAuthor() {
-        return author;
-    }
-
-    public String getISBN() {
-        return ISBN;
-    }
-
-    public boolean getIsAvalible() {
-        return isAvalible;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public void setISBN(String ISBN) {
-        this.ISBN = ISBN;
-    }
-
-    public void setIsAvalible(boolean isAvalible) {
-        this.isAvalible = isAvalible;
-    }
 }
