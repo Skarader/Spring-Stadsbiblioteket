@@ -1,46 +1,38 @@
 package com.example.Gruppuppgift_Statsbibloteket.model;
 
-import com.example.Gruppuppgift_Statsbibloteket.repository.BookRepository;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
+@Table(name = "books")
 public class Book {
-    // private String title;
-    // private String author;
-    // private String ISBN;
-    // private boolean isAvalible;
-
-    // public Book(String title, String author, String ISBN, boolean isAvalible) {
-    // this.title = title;
-    // this.author = author;
-    // this.ISBN = ISBN;
-    // this.isAvalible = isAvalible;
-    // }
 
     @Id
-    @JoinColumn(name = "BOOK_ID")
-    Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long bookId;
 
-    @JoinColumn(name = "TITLE")
-    String title;
+    private String title;
+    private Integer publicationYear;
+    private Boolean available;
 
-    @JoinColumn(name = "PUBLICATION_YEAR")
-    int publicationYear;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "author_id")
+    @JsonBackReference
+    private Author author;
 
-    @JoinColumn(name = "AUTHOR_ID")
-    int authorId;
-
-    @JoinColumn(name = "AVAILABLE")
-    boolean isAvailable;
+    public Book() {
+    }
 
 }

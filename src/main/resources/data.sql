@@ -120,23 +120,30 @@ VALUES (1, 'Fantasy'),
     (5, 'Children');
 -- Connect books with genres (many-to-many)
 INSERT INTO books_genres (book_id, genre_id)
-VALUES -- Pippi och Bröderna Lejonhjärta: Children, Fantasy
-    (1, 5),
+VALUES (1, 5),
+    -- Pippi: Children
     (1, 1),
+    -- Pippi: Fantasy
     (2, 5),
+    -- Bröderna Lejonhjärta: Children
     (2, 1),
-    -- Harry Potter böckerna: Fantasy
+    -- Bröderna Lejonhjärta: Fantasy
     (3, 1),
+    -- Harry Potter 1: Fantasy
     (4, 1),
+    -- Harry Potter 2: Fantasy
     (5, 1),
-    -- King's böcker: Horror
+    -- Harry Potter 3: Fantasy
     (6, 2),
+    -- The Shining: Horror
     (7, 2),
-    -- Millennium böckerna: Crime
+    -- Pet Sematary: Horror
     (8, 3),
+    -- Män som hatar kvinnor: Crime
     (9, 3),
-    -- Mrs. Dalloway: Classic
+    -- Flickan som lekte med elden: Crime
     (10, 4);
+-- Mrs. Dalloway: Classic
 -- Populate users
 INSERT INTO users (
         user_id,
