@@ -9,7 +9,6 @@ import com.example.Gruppuppgift_Statsbibloteket.model.Author;
 import com.example.Gruppuppgift_Statsbibloteket.model.Book;
 import com.example.Gruppuppgift_Statsbibloteket.model.BookDTO;
 import com.example.Gruppuppgift_Statsbibloteket.service.AuthorService;
-import com.example.Gruppuppgift_Statsbibloteket.service.AuthorService;
 import com.example.Gruppuppgift_Statsbibloteket.service.BookService;
 
 import java.util.List;
