@@ -139,42 +139,36 @@ VALUES -- Pippi och Bröderna Lejonhjärta: Children, Fantasy
     (10, 4);
 -- Populate users
 INSERT INTO users (
-        user_id,
         first_name,
         last_name,
         email,
         member_number
     )
 VALUES (
-        1,
         'Anna',
         'Andersson',
         'anna.andersson@email.com',
         'M20230001'
     ),
     (
-        2,
         'Erik',
         'Eriksson',
         'erik.eriksson@email.com',
         'M20230002'
     ),
     (
-        3,
         'Maria',
         'Svensson',
         'maria.svensson@email.com',
         'M20230003'
     ),
     (
-        4,
         'Johan',
         'Johansson',
         'johan.johansson@email.com',
         'M20230004'
     ),
     (
-        5,
         'Eva',
         'Larsson',
         'eva.larsson@email.com',
