@@ -63,7 +63,7 @@ public class BookController {
 
     // CREATE NEW BOOK
     @PostMapping
-    public ResponseEntity<?> createBook(@RequestBody BookDTO bookDTO) {
+    public ResponseEntity<Book> createBook(@RequestBody BookDTO bookDTO) {
         Optional<Author> author = authorService.getAuthorById(bookDTO.getAuthorId());
 
         if (author.isPresent()) {
@@ -76,7 +76,7 @@ public class BookController {
             Book savedBook = bookService.saveBook(book);
             return new ResponseEntity<>(savedBook, HttpStatus.CREATED);
         } else {
-            return new ResponseEntity<>("Something went wrhong", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
