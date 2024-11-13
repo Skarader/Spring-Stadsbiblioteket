@@ -1,16 +1,11 @@
 package com.example.Gruppuppgift_Statsbibloteket.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -18,6 +13,9 @@ import java.util.Set;
 @Setter
 @Table(name = "borrowers")
 public class Borrower {
+
+    @ElementCollection
+    private List<Long> loanIds = new ArrayList<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,5 +39,17 @@ public class Borrower {
         this.name = name;
         this.email = email;
         this.books = books;
+    }
+
+    public List<Long> getLoanIds() {
+        return loanIds;
+    }
+
+    public void setLoanIds(List<Long> loanIds) {
+        this.loanIds = loanIds;
+    }
+
+    public void addLoanId(Long loanId) {
+        loanIds.add(loanId);
     }
 }
