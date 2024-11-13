@@ -16,3 +16,5 @@ public interface LoanRepository extends JpaRepository<Loan, Long> {
     // Method to check if a book is loaned by a specific user
     Optional<Loan> findByBookIdAndUserIdAndReturnedDateIsNull(Long bookId, Long userId);
 }
+
+
