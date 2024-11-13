@@ -36,10 +36,10 @@ public class AdminsService {
         }
     }
 
-    public Book createBook(Book newBook, String username, String password) {
+    public void createBook(Book newBook, String username, String password) {
         Optional<Admins> admin = adminsRepository.findByUsernameAndPassword(username, password);
         if (admin.isPresent()) {
-            return bookService.saveBook(newBook);
+            bookService.saveBook(newBook);
         }
         else {
             throw new SecurityException("Test");
