@@ -1,34 +1,41 @@
 package com.example.Gruppuppgift_Statsbibloteket.model;
 
-import com.example.Gruppuppgift_Statsbibloteket.repository.BookRepository;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
+@Table(name = "books")
 public class Book {
+
     @Id
-    @JoinColumn(name = "BOOK_ID")
-    Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long bookId;
 
-    @JoinColumn(name = "TITLE")
-    String title;
+    @Column(unique = true, nullable = false)
+    private String title;
 
-    @JoinColumn(name = "PUBLICATION_YEAR")
-    int publicationYear;
+    private Integer publicationYear;
+    private Boolean available;
 
-    @JoinColumn(name = "AUTHOR_ID")
-    int authorId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "author_id")
+    @JsonBackReference
+    private Author author;
 
-    @JoinColumn(name = "AVAILABLE")
-    boolean isAvailable;
+    public Book() {
+    }
 
 }
