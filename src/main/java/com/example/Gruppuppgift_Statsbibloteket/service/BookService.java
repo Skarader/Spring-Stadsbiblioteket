@@ -1,31 +1,46 @@
 package com.example.Gruppuppgift_Statsbibloteket.service;
 
-import java.util.List;
-import java.util.Optional;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.Gruppuppgift_Statsbibloteket.model.Book;
 import com.example.Gruppuppgift_Statsbibloteket.repository.BookRepository;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class BookService {
 
-    BookRepository bookRepository;
+    private final BookRepository bookRepository;
 
+    @Autowired
     public BookService(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
     }
 
-    public List<Book> findAll() {
+    // GET LIST OF ALL BOOKS
+    public List<Book> getAllBooks() {
         return bookRepository.findAll();
     }
 
-    public Optional<Book> findById(Long id) {
+    // GET A BOOK WITH A ID
+    public Optional<Book> getBookById(Long id) {
         return bookRepository.findById(id);
     }
 
-    public void saveBook(Book book) {
-        bookRepository.save(book);
+    // GET A BOOK BY TITLE
+    public Optional<Book> getBookByTitle(String title) {
+        return bookRepository.findByTitle(title);
+    }
+
+    // SAVE NEW BOOK
+    public Book saveBook(Book book) {
+        return bookRepository.save(book);
+    }
+
+    // DELETE BOOK BY ID
+    public void deleteBook(Long id) {
+        bookRepository.deleteById(id);
     }
 }
