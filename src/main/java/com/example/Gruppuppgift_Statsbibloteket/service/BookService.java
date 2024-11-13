@@ -19,18 +19,27 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
+    // GET LIST OF ALL BOOKS
     public List<Book> getAllBooks() {
         return bookRepository.findAll();
     }
 
+    // GET A BOOK WITH A ID
     public Optional<Book> getBookById(Long id) {
         return bookRepository.findById(id);
     }
 
+    // GET A BOOK BY TITLE
+    public Optional<Book> getBookByTitle(String title) {
+        return bookRepository.findByTitle(title);
+    }
+
+    // SAVE NEW BOOK
     public Book saveBook(Book book) {
         return bookRepository.save(book);
     }
 
+    // DELETE BOOK BY ID
     public void deleteBook(Long id) {
         bookRepository.deleteById(id);
     }
