@@ -15,11 +15,11 @@ import java.util.Optional;
 public class AdminsService {
     private final AdminsRepository adminsRepository;
     private final UserRepository userRepository;
-    private final BookService bookService;
-    public AdminsService(AdminsRepository adminsRepository, UserRepository userRepository, BookService bookService) {
+    //private final BookService bookService;
+    public AdminsService(AdminsRepository adminsRepository, UserRepository userRepository /*BookService bookService*/) {
         this.adminsRepository = adminsRepository;
         this.userRepository = userRepository;
-        this.bookService = bookService;
+        //this.bookService = bookService;
     }
 
     public List<Admins> getAllAdmins() {
@@ -36,7 +36,7 @@ public class AdminsService {
         }
     }
 
-    public void createBook(Book newBook, String username, String password) {
+    /*public void createBook(Book newBook, String username, String password) {
         Optional<Admins> admin = adminsRepository.findByUsernameAndPassword(username, password);
         if (admin.isPresent()) {
             bookService.saveBook(newBook);
@@ -44,7 +44,7 @@ public class AdminsService {
         else {
             throw new SecurityException("Test");
         }
-    }
+    }*/
 
 
 }
