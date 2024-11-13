@@ -50,6 +50,17 @@ public class BookController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    // GET BOOKS BY AUTHOR
+    @GetMapping("/author/{author}")
+    public ResponseEntity<List<Book>> getBooksByAuthor(@PathVariable String author) {
+        List<Book> books = bookService.getBooksByAuthor(author);
+        if (books.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(books, HttpStatus.OK);
+        }
+    }
+
     // CREATE NEW BOOK
     @PostMapping
     public ResponseEntity<?> createBook(@RequestBody BookDTO bookDTO) {
