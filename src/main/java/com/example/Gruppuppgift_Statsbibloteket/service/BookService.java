@@ -1,6 +1,5 @@
 package com.example.Gruppuppgift_Statsbibloteket.service;
 
-import com.example.Gruppuppgift_Statsbibloteket.exception.BookNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,9 +23,8 @@ public class BookService {
         return bookRepository.findAll();
     }
 
-    public Book getBookById(Long id) {
-        return bookRepository.findById(id)
-                .orElseThrow(() -> new BookNotFoundException("Book not found with id " + id));
+    public Optional<Book> getBookById(Long id) {
+        return bookRepository.findById(id);
     }
 
     public Book saveBook(Book book) {
@@ -34,7 +32,6 @@ public class BookService {
     }
 
     public void deleteBook(Long id) {
-        Book book = getBookById(id);
-        bookRepository.delete(book);
+        bookRepository.deleteById(id);
     }
 }
