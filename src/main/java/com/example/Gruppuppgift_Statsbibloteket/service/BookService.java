@@ -34,6 +34,11 @@ public class BookService {
         return bookRepository.findByTitle(title);
     }
 
+    // GET BOOKS BY AUTHOR
+    public List<Book> findBooksByAuthorName(String name) {
+        return bookRepository.findByAuthorName(name);
+    }
+
     // SAVE NEW BOOK
     public Book saveBook(Book book) {
         return bookRepository.save(book);
