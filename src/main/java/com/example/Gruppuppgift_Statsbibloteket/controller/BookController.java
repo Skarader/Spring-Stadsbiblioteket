@@ -9,6 +9,7 @@ import com.example.Gruppuppgift_Statsbibloteket.model.Author;
 import com.example.Gruppuppgift_Statsbibloteket.model.Book;
 import com.example.Gruppuppgift_Statsbibloteket.model.BookDTO;
 import com.example.Gruppuppgift_Statsbibloteket.service.AuthorService;
+import com.example.Gruppuppgift_Statsbibloteket.service.AuthorService;
 import com.example.Gruppuppgift_Statsbibloteket.service.BookService;
 
 import java.util.List;
@@ -71,7 +72,7 @@ public class BookController {
             book.setTitle(bookDTO.getTitle());
             book.setPublicationYear(bookDTO.getPublicationYear());
             book.setAvailable(bookDTO.getAvailable());
-            book.setAuthor(author.get());
+            book.setAuthor(author.get()); // Set the actual Author entity here
 
             Book savedBook = bookService.saveBook(book);
             return new ResponseEntity<>(savedBook, HttpStatus.CREATED);
