@@ -29,12 +29,14 @@ public class AuthorController {
         this.authorService = authorService;
     }
 
+    // GET ALL AUTHORS
     @GetMapping
     public ResponseEntity<List<Author>> getAllAuthors() {
         List<Author> authors = authorService.getAllAuthors();
         return new ResponseEntity<>(authors, HttpStatus.OK);
     }
 
+    // GET AUTHOR BY ID
     @GetMapping("/{id}")
     public ResponseEntity<Author> getAuthorById(@PathVariable Long id) {
         Optional<Author> author = authorService.getAuthorById(id);
@@ -42,12 +44,14 @@ public class AuthorController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    // CREATE NEW AUTHOR
     @PostMapping
     public ResponseEntity<Author> createAuthor(@RequestBody Author author) {
         Author savedAuthor = authorService.saveAuthor(author);
         return new ResponseEntity<>(savedAuthor, HttpStatus.CREATED);
     }
 
+    // UPDATE BOOK BY ID
     @PutMapping("/{id}")
     public ResponseEntity<Author> updateAuthor(@PathVariable Long id, @RequestBody Author authorDetails) {
         Optional<Author> author = authorService.getAuthorById(id);
@@ -63,6 +67,7 @@ public class AuthorController {
         }
     }
 
+    // DELETE AUTHOR BY ID
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAuthor(@PathVariable Long id) {
         authorService.deleteAuthor(id);

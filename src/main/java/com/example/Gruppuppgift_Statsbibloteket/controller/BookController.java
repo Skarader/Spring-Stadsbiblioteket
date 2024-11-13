@@ -9,7 +9,6 @@ import com.example.Gruppuppgift_Statsbibloteket.model.Author;
 import com.example.Gruppuppgift_Statsbibloteket.model.Book;
 import com.example.Gruppuppgift_Statsbibloteket.model.BookDTO;
 import com.example.Gruppuppgift_Statsbibloteket.service.AuthorService;
-import com.example.Gruppuppgift_Statsbibloteket.service.AuthorService;
 import com.example.Gruppuppgift_Statsbibloteket.service.BookService;
 
 import java.util.List;
@@ -28,12 +27,14 @@ public class BookController {
         this.authorService = authorService;
     }
 
+    // GET ALL BOOKS
     @GetMapping
     public ResponseEntity<List<Book>> getAllBooks() {
         List<Book> books = bookService.getAllBooks();
         return new ResponseEntity<>(books, HttpStatus.OK);
     }
 
+    // GET BOOKS BY ID
     @GetMapping("/{id}")
     public ResponseEntity<Book> getBookById(@PathVariable Long id) {
         Optional<Book> book = bookService.getBookById(id);
@@ -41,25 +42,34 @@ public class BookController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    // GET BOOK BY TITLE
+    @GetMapping("/title/{title}")
+    public ResponseEntity<Book> getBookByTitle(@PathVariable String title) {
+        Optional<Book> book = bookService.getBookByTitle(title);
+        return book.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    // CREATE NEW BOOK
     @PostMapping
-    public ResponseEntity<Book> createBook(@RequestBody BookDTO bookDTO) {
+    public ResponseEntity<?> createBook(@RequestBody BookDTO bookDTO) {
         Optional<Author> author = authorService.getAuthorById(bookDTO.getAuthorId());
-    
+
         if (author.isPresent()) {
             Book book = new Book();
             book.setTitle(bookDTO.getTitle());
             book.setPublicationYear(bookDTO.getPublicationYear());
             book.setAvailable(bookDTO.getAvailable());
-            book.setAuthor(author.get()); // Set the actual Author entity here
-    
+            book.setAuthor(author.get());
+
             Book savedBook = bookService.saveBook(book);
             return new ResponseEntity<>(savedBook, HttpStatus.CREATED);
         } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // Author not found
+            return new ResponseEntity<>("Something went wrhong", HttpStatus.BAD_REQUEST);
         }
     }
 
-
+    // UPDATE BOOK BY ID
     @PutMapping("/{id}")
     public ResponseEntity<Book> updateBook(@PathVariable Long id, @RequestBody Book bookDetails) {
         Optional<Book> book = bookService.getBookById(id);
@@ -76,6 +86,7 @@ public class BookController {
         }
     }
 
+    // DELETE BOOK BY ID
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
         bookService.deleteBook(id);
