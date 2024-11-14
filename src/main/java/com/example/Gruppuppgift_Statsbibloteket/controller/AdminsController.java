@@ -34,12 +34,12 @@ public class AdminsController {
         );
     }
 
-    /*@PostMapping("/admins/create/book")
+    @PostMapping("/admins/create/book")
     public Book createBook(@RequestBody AdminAddBookDTO request) {
         return adminsService.createBook(
                 request.getNewBook(),
                 request.getUsername(),
                 request.getPassword()
         );
-    }*/
+    }
 }
