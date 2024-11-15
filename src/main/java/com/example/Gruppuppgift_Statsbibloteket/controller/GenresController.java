@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.Gruppuppgift_Statsbibloteket.model.Book;
 import com.example.Gruppuppgift_Statsbibloteket.model.Genres;
 import com.example.Gruppuppgift_Statsbibloteket.service.GenresService;
 
