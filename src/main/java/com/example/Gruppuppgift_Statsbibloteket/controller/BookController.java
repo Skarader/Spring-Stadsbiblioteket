@@ -6,13 +6,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.Gruppuppgift_Statsbibloteket.Dto.BookDTO;
+import com.example.Gruppuppgift_Statsbibloteket.exception.ResourceNotFoundException;
 import com.example.Gruppuppgift_Statsbibloteket.model.Author;
 import com.example.Gruppuppgift_Statsbibloteket.model.Book;
+import com.example.Gruppuppgift_Statsbibloteket.model.BooksGenres;
+import com.example.Gruppuppgift_Statsbibloteket.model.Genres;
 import com.example.Gruppuppgift_Statsbibloteket.service.AuthorService;
 import com.example.Gruppuppgift_Statsbibloteket.service.BookService;
+import com.example.Gruppuppgift_Statsbibloteket.service.GenresService;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/books")
@@ -20,11 +26,13 @@ public class BookController {
 
     private final BookService bookService;
     private final AuthorService authorService;
+    private final GenresService genresService;
 
     @Autowired
-    public BookController(BookService bookService, AuthorService authorService) {
+    public BookController(BookService bookService, AuthorService authorService, GenresService genresService) {
         this.bookService = bookService;
         this.authorService = authorService;
+        this.genresService = genresService;
     }
 
     // GET ALL BOOKS
@@ -72,6 +80,21 @@ public class BookController {
             book.setPublicationYear(bookDTO.getPublicationYear());
             book.setAvailable(bookDTO.getAvailable());
             book.setAuthor(author.get());
+
+            Set<BooksGenres> booksGenres = bookDTO.getBookGenres().stream()
+                    .map(genreDTO -> {
+                        Genres genre = genresService.getGenresById(genreDTO.getGenreId())
+                                .orElseThrow(() -> new ResourceNotFoundException(
+                                        "Genre not found with ID: " + genreDTO.getGenreId()));
+
+                        BooksGenres booksGenre = new BooksGenres();
+                        booksGenre.setGenre(genre);
+                        booksGenre.setBook(book);
+                        return booksGenre;
+                    })
+                    .collect(Collectors.toSet());
+
+            book.setBooksGenres(booksGenres);
 
             Book savedBook = bookService.saveBook(book);
             return new ResponseEntity<>(savedBook, HttpStatus.CREATED);
