@@ -5,9 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.Gruppuppgift_Statsbibloteket.Dto.BookDTO;
 import com.example.Gruppuppgift_Statsbibloteket.model.Author;
 import com.example.Gruppuppgift_Statsbibloteket.model.Book;
-import com.example.Gruppuppgift_Statsbibloteket.model.BookDTO;
 import com.example.Gruppuppgift_Statsbibloteket.service.AuthorService;
 import com.example.Gruppuppgift_Statsbibloteket.service.BookService;
 

@@ -1,4 +1,4 @@
-package com.example.Gruppuppgift_Statsbibloteket.model;
+package com.example.Gruppuppgift_Statsbibloteket.Dto;
 
 import lombok.Getter;
 import lombok.Setter;

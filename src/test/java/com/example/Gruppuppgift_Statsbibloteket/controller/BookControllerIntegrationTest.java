@@ -12,7 +12,6 @@ import com.example.Gruppuppgift_Statsbibloteket.model.Author;
 import com.example.Gruppuppgift_Statsbibloteket.model.Book;
 import com.example.Gruppuppgift_Statsbibloteket.repository.AuthorRepository;
 import com.example.Gruppuppgift_Statsbibloteket.repository.BookRepository;
-import com.example.Gruppuppgift_Statsbibloteket.service.BookService;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
