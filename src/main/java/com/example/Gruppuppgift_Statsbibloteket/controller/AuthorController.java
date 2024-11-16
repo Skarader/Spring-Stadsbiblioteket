@@ -2,7 +2,6 @@ package com.example.Gruppuppgift_Statsbibloteket.controller;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,9 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Gruppuppgift_Statsbibloteket.Dto.AuthorDTO;
-import com.example.Gruppuppgift_Statsbibloteket.exception.ResourceNotFoundException;
 import com.example.Gruppuppgift_Statsbibloteket.model.Author;
-import com.example.Gruppuppgift_Statsbibloteket.model.Book;
 import com.example.Gruppuppgift_Statsbibloteket.service.AuthorService;
 
 @RestController
