@@ -20,22 +20,17 @@ import com.example.Gruppuppgift_Statsbibloteket.Dto.AuthorDTO;
 import com.example.Gruppuppgift_Statsbibloteket.model.Author;
 
 import com.example.Gruppuppgift_Statsbibloteket.service.AuthorService;
-import com.example.Gruppuppgift_Statsbibloteket.service.BookService;
-import com.example.Gruppuppgift_Statsbibloteket.service.GenresService;
 
 @RestController
 @RequestMapping("/author")
 public class AuthorController {
 
     private final AuthorService authorService;
-    private final BookService bookService;
-    private final GenresService genresService;
 
     @Autowired
-    public AuthorController(AuthorService authorService, BookService bookService, GenresService genresService) {
+    public AuthorController(AuthorService authorService) {
         this.authorService = authorService;
-        this.bookService = bookService;
-        this.genresService = genresService;
+
     }
 
     // GET ALL AUTHORS

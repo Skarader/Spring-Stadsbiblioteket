@@ -9,9 +9,7 @@ import com.example.Gruppuppgift_Statsbibloteket.Dto.BookDTO;
 
 import com.example.Gruppuppgift_Statsbibloteket.model.Book;
 
-import com.example.Gruppuppgift_Statsbibloteket.service.AuthorService;
 import com.example.Gruppuppgift_Statsbibloteket.service.BookService;
-import com.example.Gruppuppgift_Statsbibloteket.service.GenresService;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,14 +19,11 @@ import java.util.Optional;
 public class BookController {
 
     private final BookService bookService;
-    private final AuthorService authorService;
-    private final GenresService genresService;
 
     @Autowired
-    public BookController(BookService bookService, AuthorService authorService, GenresService genresService) {
+    public BookController(BookService bookService) {
         this.bookService = bookService;
-        this.authorService = authorService;
-        this.genresService = genresService;
+
     }
 
     // GET ALL BOOKS
