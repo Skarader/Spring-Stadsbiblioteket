@@ -30,7 +30,6 @@ public class AuthorController {
     @Autowired
     public AuthorController(AuthorService authorService) {
         this.authorService = authorService;
-
     }
 
     // GET ALL AUTHORS

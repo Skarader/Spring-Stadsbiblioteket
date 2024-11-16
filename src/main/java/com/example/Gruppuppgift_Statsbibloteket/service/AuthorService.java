@@ -15,18 +15,20 @@ import com.example.Gruppuppgift_Statsbibloteket.model.Book;
 import com.example.Gruppuppgift_Statsbibloteket.model.BooksGenres;
 import com.example.Gruppuppgift_Statsbibloteket.model.Genres;
 import com.example.Gruppuppgift_Statsbibloteket.repository.AuthorRepository;
+import com.example.Gruppuppgift_Statsbibloteket.repository.BookRepository;
 
 @Service
 public class AuthorService {
 
     private final AuthorRepository authorRepository;
-    private final BookService bookService;
+    private final BookRepository bookRepository;
     private final GenresService genresService;
 
     @Autowired
-    public AuthorService(AuthorRepository authorRepository, BookService bookService, GenresService genresService) {
+    public AuthorService(AuthorRepository authorRepository, BookRepository bookRepository,
+            GenresService genresService) {
         this.authorRepository = authorRepository;
-        this.bookService = bookService;
+        this.bookRepository = bookRepository;
         this.genresService = genresService;
     }
 
@@ -67,7 +69,7 @@ public class AuthorService {
             List<Book> updatedBooks = authorDTO.getBooks().stream().map(bookDTO -> {
                 // get or create a book
                 Book book = bookDTO.getBookId() != null
-                        ? bookService.getBookById(bookDTO.getBookId())
+                        ? bookRepository.findById(bookDTO.getBookId())
                                 .orElseThrow(() -> new ResourceNotFoundException(
                                         "Book not found with ID: " + bookDTO.getBookId()))
                         : new Book();
