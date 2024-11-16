@@ -2,8 +2,6 @@ package com.example.Gruppuppgift_Statsbibloteket.controller;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,11 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Gruppuppgift_Statsbibloteket.Dto.AuthorDTO;
-import com.example.Gruppuppgift_Statsbibloteket.exception.ResourceNotFoundException;
+
 import com.example.Gruppuppgift_Statsbibloteket.model.Author;
-import com.example.Gruppuppgift_Statsbibloteket.model.Book;
-import com.example.Gruppuppgift_Statsbibloteket.model.BooksGenres;
-import com.example.Gruppuppgift_Statsbibloteket.model.Genres;
+
 import com.example.Gruppuppgift_Statsbibloteket.service.AuthorService;
 import com.example.Gruppuppgift_Statsbibloteket.service.BookService;
 import com.example.Gruppuppgift_Statsbibloteket.service.GenresService;
@@ -61,84 +57,15 @@ public class AuthorController {
     @PostMapping
     public ResponseEntity<Author> createAuthor(@RequestBody AuthorDTO authorDTO) {
 
-        Author author = new Author();
-        author.setFirstName(authorDTO.getFirstName());
-        author.setLastName(authorDTO.getLastName());
-        author.setBirthDate(authorDTO.getBirthDate());
-
-        Author savedAuthor = authorService.createAuthor(author);
+        Author savedAuthor = authorService.createAuthor(authorDTO);
         return new ResponseEntity<>(savedAuthor, HttpStatus.CREATED);
     }
 
     // UPDATE AUTHOR BY ID
     @PutMapping("/{id}")
     public ResponseEntity<Author> updateAuthor(@PathVariable Long id, @RequestBody AuthorDTO authorDTO) {
-        Optional<Author> existingAuthorOptional = authorService.getAuthorById(id);
-
-        if (existingAuthorOptional.isPresent()) {
-            Author existingAuthor = existingAuthorOptional.get();
-
-            if (authorDTO.getFirstName() != null) {
-                existingAuthor.setFirstName(authorDTO.getFirstName());
-            }
-            if (authorDTO.getLastName() != null) {
-                existingAuthor.setLastName(authorDTO.getLastName());
-            }
-            if (authorDTO.getBirthDate() != null) {
-                existingAuthor.setBirthDate(authorDTO.getBirthDate());
-            }
-
-            if (authorDTO.getBooks() != null) {
-                List<Book> updatedBooks = authorDTO.getBooks().stream().map(bookDTO -> {
-
-                    Book book = bookDTO.getBookId() != null
-                            ? bookService.getBookById(bookDTO.getBookId())
-                                    .orElseThrow(() -> new ResourceNotFoundException(
-                                            "Book not found with ID: " + bookDTO.getBookId()))
-                            : new Book();
-
-                    if (bookDTO.getTitle() != null) {
-                        book.setTitle(bookDTO.getTitle());
-                    }
-                    if (bookDTO.getPublicationYear() != 0) {
-                        book.setPublicationYear(bookDTO.getPublicationYear());
-                    }
-                    if (bookDTO.getAvailable() != null) {
-                        book.setAvailable(bookDTO.getAvailable());
-                    }
-
-                    if (bookDTO.getBookGenreIds() != null) {
-
-                        if (book.getBooksGenres() != null) {
-                            book.getBooksGenres().clear();
-                        }
-
-                        Set<BooksGenres> updatedGenres = bookDTO.getBookGenreIds().stream()
-                                .map(genreId -> {
-                                    Genres genre = genresService.getGenresById(genreId)
-                                            .orElseThrow(() -> new ResourceNotFoundException(
-                                                    "Genre not found with ID: " + genreId));
-                                    BooksGenres booksGenre = new BooksGenres();
-                                    booksGenre.setBook(book);
-                                    booksGenre.setGenre(genre);
-                                    return booksGenre;
-                                })
-                                .collect(Collectors.toSet());
-                        book.getBooksGenres().addAll(updatedGenres);
-                    }
-
-                    book.setAuthor(existingAuthor);
-                    return book;
-                }).collect(Collectors.toList());
-
-                existingAuthor.setBooks(updatedBooks);
-            }
-
-            Author updatedAuthor = authorService.createAuthor(existingAuthor);
-            return new ResponseEntity<>(updatedAuthor, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        Author updatedAuthor = authorService.updateAuthor(id, authorDTO);
+        return new ResponseEntity<>(updatedAuthor, HttpStatus.OK);
     }
 
     // DELETE AUTHOR BY ID
