@@ -8,6 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BookDTO {
+    private Long bookId;
     private String title;
     private Integer publicationYear;
     private Long authorId;

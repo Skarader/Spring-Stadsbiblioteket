@@ -72,18 +72,16 @@ public class BookController {
     // CREATE NEW BOOK
     @PostMapping
     public ResponseEntity<Book> createBook(@RequestBody BookDTO bookDTO) {
-        // Fetch the Author
+
         Author author = authorService.getAuthorById(bookDTO.getAuthorId())
                 .orElseThrow(() -> new ResourceNotFoundException("Author not found with ID: " + bookDTO.getAuthorId()));
 
-        // Create Book
         Book book = new Book();
         book.setTitle(bookDTO.getTitle());
         book.setPublicationYear(bookDTO.getPublicationYear());
         book.setAvailable(bookDTO.getAvailable());
         book.setAuthor(author);
 
-        // Handle genres
         Set<BooksGenres> booksGenres = bookDTO.getBookGenreIds().stream()
                 .map(genreId -> {
                     Genres genre = genresService.getGenresById(genreId)
@@ -104,16 +102,14 @@ public class BookController {
     // UPDATE BOOK BY ID
     @PutMapping("/{id}")
     public ResponseEntity<Book> updateBook(@PathVariable Long id, @RequestBody BookDTO bookDTO) {
-        // Fetch the existing book
+
         Book existingBook = bookService.getBookById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Book not found with ID: " + id));
 
-        // Update fields
         existingBook.setTitle(bookDTO.getTitle());
         existingBook.setPublicationYear(bookDTO.getPublicationYear());
         existingBook.setAvailable(bookDTO.getAvailable());
 
-        // Update Author
         if (bookDTO.getAuthorId() != null) {
             Author author = authorService.getAuthorById(bookDTO.getAuthorId())
                     .orElseThrow(
@@ -121,7 +117,6 @@ public class BookController {
             existingBook.setAuthor(author);
         }
 
-        // Update Genres
         if (bookDTO.getBookGenreIds() != null) {
             Set<BooksGenres> updatedGenres = bookDTO.getBookGenreIds().stream()
                     .map(genreId -> {
