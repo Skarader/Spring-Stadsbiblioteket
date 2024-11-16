@@ -1,5 +1,7 @@
 package com.example.Gruppuppgift_Statsbibloteket.service;
 
+import com.example.Gruppuppgift_Statsbibloteket.Dto.UserLoanDto;
+import com.example.Gruppuppgift_Statsbibloteket.model.Users;
 import com.example.Gruppuppgift_Statsbibloteket.repository.LoanRepository;
 import com.example.Gruppuppgift_Statsbibloteket.model.Loan;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import com.example.Gruppuppgift_Statsbibloteket.exception.LoanIsNotAvailableExce
 import jakarta.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LoanService {
@@ -48,4 +51,12 @@ public class LoanService {
     public List<Loan> getUserLoans(Long userId) {
         return loanRepository.findByUserId(userId);
     }
+
+  /*  public Loan testloan(UserLoanDto userLoanDto, String firstname, String lastname){
+        Optional<Users> user = loanRepository.findByfirstnameandlastname(firstname, lastname);
+        if (user.isPresent()) {
+
+        }
+    }
+    */
 }
