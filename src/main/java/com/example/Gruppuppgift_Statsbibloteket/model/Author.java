@@ -13,7 +13,6 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -38,18 +37,4 @@ public class Author {
     public Author() {
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-        Author author = (Author) o;
-        return Objects.equals(authorId, author.authorId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(authorId);
-    }
 }
