@@ -2,6 +2,7 @@ package com.example.Gruppuppgift_Statsbibloteket.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.Gruppuppgift_Statsbibloteket.Dto.AuthorDTO;
+import com.example.Gruppuppgift_Statsbibloteket.exception.ResourceNotFoundException;
 import com.example.Gruppuppgift_Statsbibloteket.model.Author;
+import com.example.Gruppuppgift_Statsbibloteket.model.Book;
 import com.example.Gruppuppgift_Statsbibloteket.service.AuthorService;
 
 @RestController
@@ -46,21 +50,27 @@ public class AuthorController {
 
     // CREATE NEW AUTHOR
     @PostMapping
-    public ResponseEntity<Author> createAuthor(@RequestBody Author author) {
-        Author savedAuthor = authorService.saveAuthor(author);
+    public ResponseEntity<Author> createAuthor(@RequestBody AuthorDTO authorDTO) {
+
+        Author author = new Author();
+        author.setFirstName(authorDTO.getFirstName());
+        author.setLastName(authorDTO.getLastName());
+        author.setBirthDate(authorDTO.getBirthDate());
+
+        Author savedAuthor = authorService.createAuthor(author);
         return new ResponseEntity<>(savedAuthor, HttpStatus.CREATED);
     }
 
-    // UPDATE BOOK BY ID
+    // UPDATE AUTHOR BY ID
     @PutMapping("/{id}")
-    public ResponseEntity<Author> updateAuthor(@PathVariable Long id, @RequestBody Author authorDetails) {
+    public ResponseEntity<Author> updateAuthor(@PathVariable Long id, @RequestBody AuthorDTO authorDTO) {
         Optional<Author> author = authorService.getAuthorById(id);
         if (author.isPresent()) {
             Author existingAuthor = author.get();
-            existingAuthor.setFirstName(authorDetails.getFirstName());
-            existingAuthor.setLastName(authorDetails.getLastName());
-            existingAuthor.setBirthDate(authorDetails.getBirthDate());
-            Author updatedAuthor = authorService.saveAuthor(existingAuthor);
+            existingAuthor.setFirstName(authorDTO.getFirstName());
+            existingAuthor.setLastName(authorDTO.getLastName());
+            existingAuthor.setBirthDate(authorDTO.getBirthDate());
+            Author updatedAuthor = authorService.createAuthor(existingAuthor);
             return new ResponseEntity<>(updatedAuthor, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

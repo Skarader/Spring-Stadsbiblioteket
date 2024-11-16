@@ -12,5 +12,5 @@ public class BookDTO {
     private Integer publicationYear;
     private Long authorId;
     private Boolean available;
-    private List<GenresDTO> bookGenres;
+    private List<Long> bookGenreIds;
 }

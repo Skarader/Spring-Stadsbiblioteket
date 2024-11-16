@@ -37,7 +37,7 @@ public class Book {
     private Boolean available;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "author_id")
+    @JoinColumn(name = "author_id", nullable = false)
     @JsonBackReference
     private Author author;
 

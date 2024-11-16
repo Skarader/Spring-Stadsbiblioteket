@@ -15,6 +15,7 @@ import com.example.Gruppuppgift_Statsbibloteket.service.AuthorService;
 import com.example.Gruppuppgift_Statsbibloteket.service.BookService;
 import com.example.Gruppuppgift_Statsbibloteket.service.GenresService;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -72,52 +73,73 @@ public class BookController {
     // CREATE NEW BOOK
     @PostMapping
     public ResponseEntity<Book> createBook(@RequestBody BookDTO bookDTO) {
-        Optional<Author> author = authorService.getAuthorById(bookDTO.getAuthorId());
+        // Fetch the Author
+        Author author = authorService.getAuthorById(bookDTO.getAuthorId())
+                .orElseThrow(() -> new ResourceNotFoundException("Author not found with ID: " + bookDTO.getAuthorId()));
 
-        if (author.isPresent()) {
-            Book book = new Book();
-            book.setTitle(bookDTO.getTitle());
-            book.setPublicationYear(bookDTO.getPublicationYear());
-            book.setAvailable(bookDTO.getAvailable());
-            book.setAuthor(author.get());
+        // Create Book
+        Book book = new Book();
+        book.setTitle(bookDTO.getTitle());
+        book.setPublicationYear(bookDTO.getPublicationYear());
+        book.setAvailable(bookDTO.getAvailable());
+        book.setAuthor(author);
 
-            Set<BooksGenres> booksGenres = bookDTO.getBookGenres().stream()
-                    .map(genreDTO -> {
-                        Genres genre = genresService.getGenresById(genreDTO.getGenreId())
-                                .orElseThrow(() -> new ResourceNotFoundException(
-                                        "Genre not found with ID: " + genreDTO.getGenreId()));
+        // Handle genres
+        Set<BooksGenres> booksGenres = bookDTO.getBookGenreIds().stream()
+                .map(genreId -> {
+                    Genres genre = genresService.getGenresById(genreId)
+                            .orElseThrow(() -> new ResourceNotFoundException("Genre not found with ID: " + genreId));
+                    BooksGenres bookGenre = new BooksGenres();
+                    bookGenre.setBook(book);
+                    bookGenre.setGenre(genre);
+                    return bookGenre;
+                })
+                .collect(Collectors.toSet());
 
-                        BooksGenres booksGenre = new BooksGenres();
-                        booksGenre.setGenre(genre);
-                        booksGenre.setBook(book);
-                        return booksGenre;
-                    })
-                    .collect(Collectors.toSet());
+        book.setBooksGenres(booksGenres);
 
-            book.setBooksGenres(booksGenres);
-
-            Book savedBook = bookService.saveBook(book);
-            return new ResponseEntity<>(savedBook, HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        Book savedBook = bookService.saveBook(book);
+        return new ResponseEntity<>(savedBook, HttpStatus.CREATED);
     }
 
     // UPDATE BOOK BY ID
     @PutMapping("/{id}")
-    public ResponseEntity<Book> updateBook(@PathVariable Long id, @RequestBody Book bookDetails) {
-        Optional<Book> book = bookService.getBookById(id);
-        if (book.isPresent()) {
-            Book existingBook = book.get();
-            existingBook.setTitle(bookDetails.getTitle());
-            existingBook.setPublicationYear(bookDetails.getPublicationYear());
-            existingBook.setAvailable(bookDetails.getAvailable());
-            existingBook.setAuthor(bookDetails.getAuthor());
-            Book updatedBook = bookService.saveBook(existingBook);
-            return new ResponseEntity<>(updatedBook, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<Book> updateBook(@PathVariable Long id, @RequestBody BookDTO bookDTO) {
+        // Fetch the existing book
+        Book existingBook = bookService.getBookById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Book not found with ID: " + id));
+
+        // Update fields
+        existingBook.setTitle(bookDTO.getTitle());
+        existingBook.setPublicationYear(bookDTO.getPublicationYear());
+        existingBook.setAvailable(bookDTO.getAvailable());
+
+        // Update Author
+        if (bookDTO.getAuthorId() != null) {
+            Author author = authorService.getAuthorById(bookDTO.getAuthorId())
+                    .orElseThrow(
+                            () -> new ResourceNotFoundException("Author not found with ID: " + bookDTO.getAuthorId()));
+            existingBook.setAuthor(author);
         }
+
+        // Update Genres
+        if (bookDTO.getBookGenreIds() != null) {
+            Set<BooksGenres> updatedGenres = bookDTO.getBookGenreIds().stream()
+                    .map(genreId -> {
+                        Genres genre = genresService.getGenresById(genreId)
+                                .orElseThrow(
+                                        () -> new ResourceNotFoundException("Genre not found with ID: " + genreId));
+                        BooksGenres bookGenre = new BooksGenres();
+                        bookGenre.setBook(existingBook);
+                        bookGenre.setGenre(genre);
+                        return bookGenre;
+                    })
+                    .collect(Collectors.toSet());
+            existingBook.setBooksGenres(updatedGenres);
+        }
+
+        Book updatedBook = bookService.saveBook(existingBook);
+        return new ResponseEntity<>(updatedBook, HttpStatus.OK);
     }
 
     // DELETE BOOK BY ID

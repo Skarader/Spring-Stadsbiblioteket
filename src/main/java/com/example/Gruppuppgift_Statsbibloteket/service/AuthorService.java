@@ -27,7 +27,7 @@ public class AuthorService {
         return authorRepository.findById(id);
     }
 
-    public Author saveAuthor(Author author) {
+    public Author createAuthor(Author author) {
         return authorRepository.save(author);
     }
 
