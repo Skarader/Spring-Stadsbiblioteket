@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/loans")
 public class LoanController {
@@ -20,5 +22,11 @@ public class LoanController {
     public ResponseEntity<Loan> createLoan(@RequestBody UserLoanDto userLoanDto) {
         Loan loan = loanService.createLoan(userLoanDto);
         return new ResponseEntity<>(loan, HttpStatus.CREATED);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Loan>> getAllLoans() {
+        List<Loan> loans = loanService.getAllLoans();
+        return new ResponseEntity<>(loans, HttpStatus.OK);
     }
 }

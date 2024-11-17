@@ -27,6 +27,16 @@ public class Loan {
     @Column(name = "Returned_date")
     private LocalDate returnedDate;
 
+    // För att endast hämta boken vid behov
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "Book_id", insertable = false, updatable = false)
+    private Book book;
+
+    // För att endast hämta användaren vid behov
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "User_id", insertable = false, updatable = false)
+    private Users user;
+
     // Getters and Setters
     public Long getId() {
         return id;
