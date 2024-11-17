@@ -1,7 +1,5 @@
 package com.example.Gruppuppgift_Statsbibloteket.model;
 
-// import javax.persistence.*;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
