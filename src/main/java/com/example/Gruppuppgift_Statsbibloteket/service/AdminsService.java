@@ -1,5 +1,6 @@
 package com.example.Gruppuppgift_Statsbibloteket.service;
 
+import com.example.Gruppuppgift_Statsbibloteket.Dto.BookDTO;
 import com.example.Gruppuppgift_Statsbibloteket.model.Admins;
 import com.example.Gruppuppgift_Statsbibloteket.model.Book;
 import com.example.Gruppuppgift_Statsbibloteket.model.Users;
@@ -37,10 +38,10 @@ public class AdminsService {
         }
     }
 
-    public Book createBook(Book newBook, String username, String password) {
+    public Book createBook(BookDTO bookDTO, String username, String password) {
         Optional<Admins> admin = adminsRepository.findByUsernameAndPassword(username, password);
         if (admin.isPresent()) {
-            return bookService.saveBook(newBook);
+            return bookService.createBook(bookDTO);
         }
         else {
             throw new SecurityException("Test");

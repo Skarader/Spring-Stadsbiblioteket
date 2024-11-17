@@ -9,5 +9,5 @@ import lombok.Setter;
 public class AdminAddBookDTO {
     private String username;
     private String password;
-    private Book newBook;
+    private BookDTO newBook;
 }
