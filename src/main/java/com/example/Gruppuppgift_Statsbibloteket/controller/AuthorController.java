@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.Gruppuppgift_Statsbibloteket.Dto.AuthorDTO;
+
 import com.example.Gruppuppgift_Statsbibloteket.model.Author;
+
 import com.example.Gruppuppgift_Statsbibloteket.service.AuthorService;
 
 @RestController
@@ -46,25 +49,17 @@ public class AuthorController {
 
     // CREATE NEW AUTHOR
     @PostMapping
-    public ResponseEntity<Author> createAuthor(@RequestBody Author author) {
-        Author savedAuthor = authorService.saveAuthor(author);
+    public ResponseEntity<Author> createAuthor(@RequestBody AuthorDTO authorDTO) {
+
+        Author savedAuthor = authorService.createAuthor(authorDTO);
         return new ResponseEntity<>(savedAuthor, HttpStatus.CREATED);
     }
 
-    // UPDATE BOOK BY ID
+    // UPDATE AUTHOR BY ID
     @PutMapping("/{id}")
-    public ResponseEntity<Author> updateAuthor(@PathVariable Long id, @RequestBody Author authorDetails) {
-        Optional<Author> author = authorService.getAuthorById(id);
-        if (author.isPresent()) {
-            Author existingAuthor = author.get();
-            existingAuthor.setFirstName(authorDetails.getFirstName());
-            existingAuthor.setLastName(authorDetails.getLastName());
-            existingAuthor.setBirthDate(authorDetails.getBirthDate());
-            Author updatedAuthor = authorService.saveAuthor(existingAuthor);
-            return new ResponseEntity<>(updatedAuthor, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<Author> updateAuthor(@PathVariable Long id, @RequestBody AuthorDTO authorDTO) {
+        Author updatedAuthor = authorService.updateAuthor(id, authorDTO);
+        return new ResponseEntity<>(updatedAuthor, HttpStatus.OK);
     }
 
     // DELETE AUTHOR BY ID
