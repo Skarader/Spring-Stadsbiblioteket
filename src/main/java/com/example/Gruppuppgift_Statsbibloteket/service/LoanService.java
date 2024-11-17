@@ -33,6 +33,7 @@ public class LoanService {
 
         LocalDate loanDate = LocalDate.parse(userLoanDto.getLoanDate());
         LocalDate dueDate = LocalDate.parse(userLoanDto.getDueDate());
+        book.setAvailable(false);
 
         Loan loan = new Loan();
         loan.setUserId(user.getUser_id());

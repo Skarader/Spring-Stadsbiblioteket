@@ -1,5 +1,6 @@
 package com.example.Gruppuppgift_Statsbibloteket.service;
 
+import com.example.Gruppuppgift_Statsbibloteket.Dto.AdminUpdateBookDTO;
 import com.example.Gruppuppgift_Statsbibloteket.Dto.BookDTO;
 import com.example.Gruppuppgift_Statsbibloteket.model.Admins;
 import com.example.Gruppuppgift_Statsbibloteket.model.Book;
@@ -18,6 +19,7 @@ public class AdminsService {
     private final AdminsRepository adminsRepository;
     private final UserRepository userRepository;
     private final BookService bookService;
+
     public AdminsService(AdminsRepository adminsRepository, UserRepository userRepository, BookService bookService) {
         this.adminsRepository = adminsRepository;
         this.userRepository = userRepository;
@@ -56,6 +58,15 @@ public class AdminsService {
             throw new SecurityException("Test");
         }
 
+    }
+
+    public Book updateBookInfo(String username, String password, Long id, BookDTO bookDTO) {
+        Optional<Admins> admin = adminsRepository.findByUsernameAndPassword(username, password);
+        if (admin.isPresent()) {
+            return this.bookService.updateBook(id, bookDTO);
+        }else {
+            throw new SecurityException("Test");
+        }
     }
 
 
