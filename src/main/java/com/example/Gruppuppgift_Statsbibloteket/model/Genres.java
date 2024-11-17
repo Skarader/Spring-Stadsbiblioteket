@@ -2,7 +2,7 @@ package com.example.Gruppuppgift_Statsbibloteket.model;
 
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -24,8 +24,8 @@ public class Genres {
 
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "genre", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
     private Set<BooksGenres> booksGenres;
 
     public Genres() {

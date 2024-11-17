@@ -1,5 +1,6 @@
 package com.example.Gruppuppgift_Statsbibloteket.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -36,13 +37,13 @@ public class Book {
     private Boolean available;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "author_id")
+    @JoinColumn(name = "author_id", nullable = false)
     @JsonBackReference
     private Author author;
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private Set<BooksGenres> booksGenres;
+    private Set<BooksGenres> booksGenres = new HashSet<>();
 
     public Book() {
     }
