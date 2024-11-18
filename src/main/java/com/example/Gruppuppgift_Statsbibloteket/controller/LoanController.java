@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/loans")
@@ -28,5 +29,11 @@ public class LoanController {
     public ResponseEntity<List<Loan>> getAllLoans() {
         List<Loan> loans = loanService.getAllLoans();
         return new ResponseEntity<>(loans, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Optional<Loan>> deleteLoan(@PathVariable long id) {
+        Optional<Loan> loan = loanService.returnBook(id);
+        return new ResponseEntity<>(loan, HttpStatus.OK);
     }
 }
