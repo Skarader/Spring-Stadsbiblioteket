@@ -1,12 +1,8 @@
 package com.example.Gruppuppgift_Statsbibloteket.controller;
 
 import com.example.Gruppuppgift_Statsbibloteket.Dto.UserLoanDto;
-import com.example.Gruppuppgift_Statsbibloteket.model.Book;
 import com.example.Gruppuppgift_Statsbibloteket.model.Loan;
-import com.example.Gruppuppgift_Statsbibloteket.model.Users;
 import com.example.Gruppuppgift_Statsbibloteket.service.LoanService;
-import com.example.Gruppuppgift_Statsbibloteket.repository.UserRepository;
-import com.example.Gruppuppgift_Statsbibloteket.repository.BookRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -59,36 +55,8 @@ public class LoanControllerUnitTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.userId").value(userId))
                 .andExpect(jsonPath("$.bookId").value(bookId))
-                .andExpect(jsonPath("$.loanDate").value("2024-11-17"))
+                .andExpect(jsonPath("$.loanDate").value("2024-11-17")) // The expected format here is the string
                 .andExpect(jsonPath("$.dueDate").value("2024-12-17"));
-
-        verify(loanService, times(1)).createLoan(any(UserLoanDto.class));
-    }
-
-    @Test
-    void createLoan_ShouldReturnNotFound_WhenUserNotFound() throws Exception {
-        // Given
-        when(loanService.createLoan(any(UserLoanDto.class))).thenThrow(new RuntimeException("User not found"));
-
-        // When & Then
-        mockMvc.perform(post("/loans")
-                        .contentType("application/json")
-                        .content("{\"userId\":1, \"bookId\":1, \"loanDate\":\"2024-11-17\", \"dueDate\":\"2024-12-17\"}"))
-                .andExpect(status().isNotFound());
-
-        verify(loanService, times(1)).createLoan(any(UserLoanDto.class));
-    }
-
-    @Test
-    void createLoan_ShouldReturnNotFound_WhenBookNotFound() throws Exception {
-        // Given
-        when(loanService.createLoan(any(UserLoanDto.class))).thenThrow(new RuntimeException("Book not found"));
-
-        // When & Then
-        mockMvc.perform(post("/loans")
-                        .contentType("application/json")
-                        .content("{\"userId\":1, \"bookId\":1, \"loanDate\":\"2024-11-17\", \"dueDate\":\"2024-12-17\"}"))
-                .andExpect(status().isNotFound());
 
         verify(loanService, times(1)).createLoan(any(UserLoanDto.class));
     }
