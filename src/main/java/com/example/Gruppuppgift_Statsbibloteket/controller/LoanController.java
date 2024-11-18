@@ -18,7 +18,11 @@ public class LoanController {
     // Create loan method
     @PostMapping
     public ResponseEntity<Loan> createLoan(@RequestBody UserLoanDto userLoanDto) {
-        Loan loan = loanService.createLoan(userLoanDto);
-        return new ResponseEntity<>(loan, HttpStatus.CREATED);
+        try {
+            Loan loan = loanService.createLoan(userLoanDto);
+            return new ResponseEntity<>(loan, HttpStatus.CREATED);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
