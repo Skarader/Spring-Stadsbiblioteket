@@ -3,9 +3,11 @@ package com.example.Gruppuppgift_Statsbibloteket.controller;
 import com.example.Gruppuppgift_Statsbibloteket.model.Users;
 import com.example.Gruppuppgift_Statsbibloteket.service.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 //@RequestMapping("/user")
@@ -19,6 +21,11 @@ public class UserController {
     @GetMapping("/users")
     public List<Users> getAllUsers() {
         return userService.getAllUsers();
+    }
+
+    @GetMapping("/users/{id}")
+    public Optional<Users> getUserById(@PathVariable Long id) {
+        return userService.getUserById(id);
     }
 
 }

@@ -2,14 +2,12 @@ package com.example.Gruppuppgift_Statsbibloteket.controller;
 
 import com.example.Gruppuppgift_Statsbibloteket.Dto.AdminAddBookDTO;
 import com.example.Gruppuppgift_Statsbibloteket.Dto.AdminAddUserDTO;
+import com.example.Gruppuppgift_Statsbibloteket.Dto.BookDTO;
 import com.example.Gruppuppgift_Statsbibloteket.model.Admins;
 import com.example.Gruppuppgift_Statsbibloteket.model.Book;
 import com.example.Gruppuppgift_Statsbibloteket.model.Users;
 import com.example.Gruppuppgift_Statsbibloteket.service.AdminsService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,12 +32,22 @@ public class AdminsController {
         );
     }
 
-    /*@PostMapping("/admins/create/book")
+    @PostMapping("/admins/create/book")
     public Book createBook(@RequestBody AdminAddBookDTO request) {
         return adminsService.createBook(
                 request.getNewBook(),
                 request.getUsername(),
                 request.getPassword()
         );
-    }*/
+    }
+
+    @GetMapping("/admins/{username}/{password}/borrowed-books")
+    public List<Book> getBorrowedBooks(@PathVariable String username, @PathVariable String password) {
+        return adminsService.getBorrowedBooks(username, password);
+    }
+
+    @PutMapping("/admins/{username}/{password}/update/book/{id}")
+    public Book updateBook(@PathVariable String username, @PathVariable String password, @PathVariable Long id, @RequestBody BookDTO bookDTO) {
+        return adminsService.updateBookInfo(username, password, id, bookDTO);
+    }
 }

@@ -1,13 +1,10 @@
 package com.example.Gruppuppgift_Statsbibloteket.Dto;
 
 import com.example.Gruppuppgift_Statsbibloteket.model.Book;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
-public class AdminAddBookDTO {
+public class AdminUpdateBookDTO {
     private String username;
     private String password;
-    private BookDTO newBook;
+    private Long id;
+    private BookDTO book;
 }

@@ -1,16 +1,11 @@
 package com.example.Gruppuppgift_Statsbibloteket.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 @Entity
-@Getter
-@Setter
 @Table(name = "borrowers")
 public class Borrower {
 
@@ -51,5 +46,37 @@ public class Borrower {
 
     public void addLoanId(Long loanId) {
         loanIds.add(loanId);
+    }
+
+    public Long getBorrowerId() {
+        return borrowerId;
+    }
+
+    public void setBorrowerId(Long borrowerId) {
+        this.borrowerId = borrowerId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Set<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(Set<Book> books) {
+        this.books = books;
     }
 }
