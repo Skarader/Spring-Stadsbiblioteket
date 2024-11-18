@@ -5,6 +5,7 @@ import com.example.Gruppuppgift_Statsbibloteket.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -16,6 +17,10 @@ public class UserService {
 
     public List<Users> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    public Optional<Users> getUserById(Long id) {
+        return userRepository.findById(id);
     }
 
 }
