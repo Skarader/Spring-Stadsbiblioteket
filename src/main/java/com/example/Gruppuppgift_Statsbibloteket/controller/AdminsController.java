@@ -55,7 +55,7 @@ public class AdminsController {
         return adminsService.updateBookInfo(username, password, id, bookDTO);
     }
 
-    @GetMapping("/admins/test")
+    @GetMapping("/admins/get-borrowed-books")
     public List<AdminGetBorrowedBooks> getBorrowedBooks() {
         return this.loanService.getBorrowedBooksWithUsers();
     }
