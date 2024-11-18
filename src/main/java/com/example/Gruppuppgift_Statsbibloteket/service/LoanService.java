@@ -1,5 +1,6 @@
 package com.example.Gruppuppgift_Statsbibloteket.service;
 
+import com.example.Gruppuppgift_Statsbibloteket.Dto.AdminGetBorrowedBooks;
 import com.example.Gruppuppgift_Statsbibloteket.Dto.UserLoanDto;
 import com.example.Gruppuppgift_Statsbibloteket.model.Book;
 import com.example.Gruppuppgift_Statsbibloteket.model.Loan;
@@ -64,5 +65,9 @@ public class LoanService {
 
         }
         return loan;
+    }
+
+    public List<AdminGetBorrowedBooks> getBorrowedBooksWithUsers() {
+        return loanRepository.findBorrowedBooksWithUser();
     }
 }
