@@ -135,9 +135,11 @@ public class BookService {
         // check if book is loaned out
         if (!existingBook.getAvailable()) {
             throw new ResourceNotFoundException("cant delete a book thats currently loaned out!");
-        } else {
-            bookRepository.deleteById(id);
         }
+
+        // delete book
+        bookRepository.deleteById(id);
+
     }
 
     public List<Book> getBorrowedBooks() {
