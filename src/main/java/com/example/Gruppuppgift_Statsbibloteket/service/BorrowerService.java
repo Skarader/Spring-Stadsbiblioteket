@@ -2,7 +2,6 @@ package com.example.Gruppuppgift_Statsbibloteket.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.example.Gruppuppgift_Statsbibloteket.model.Borrower;
 import com.example.Gruppuppgift_Statsbibloteket.repository.BorrowerRepository;
 

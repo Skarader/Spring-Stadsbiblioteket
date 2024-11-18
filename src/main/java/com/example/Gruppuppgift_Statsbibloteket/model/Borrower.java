@@ -4,50 +4,53 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.HashSet;
 
 @Entity
-@Table(name = "borrowers")
+@Table(name = "BORROWERS")
 public class Borrower {
-
-    @ElementCollection
-    private List<Long> loanIds = new ArrayList<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "BORROWER_ID")
     private Long borrowerId;
 
+    @Column(name = "NAME")
     private String name;
+
+    @Column(name = "EMAIL")
     private String email;
 
+    @JsonIgnore // Ignorera i JSON
+    @ElementCollection
+    @CollectionTable(
+            name = "BORROWER_LOAN_IDS",
+            joinColumns = @JoinColumn(name = "BORROWER_ID")
+    )
+    @Column(name = "LOAN_IDS")
+    private List<Long> loanIds = new ArrayList<>();
+
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
-            name = "borrower_books",
-            joinColumns = @JoinColumn(name = "borrower_id"),
-            inverseJoinColumns = @JoinColumn(name = "book_id")
+            name = "BORROWER_BOOKS",
+            joinColumns = @JoinColumn(name = "BORROWER_ID"),
+            inverseJoinColumns = @JoinColumn(name = "BOOK_ID")
     )
-    private Set<Book> books;
+    private Set<Book> books = new HashSet<>();
 
-    public Borrower() {
-    }
+    // Standardkonstruktor
+    public Borrower() {}
 
+    // Ny konstruktor som matchar testernas parametrar
     public Borrower(String name, String email, Set<Book> books) {
         this.name = name;
         this.email = email;
         this.books = books;
     }
 
-    public List<Long> getLoanIds() {
-        return loanIds;
-    }
-
-    public void setLoanIds(List<Long> loanIds) {
-        this.loanIds = loanIds;
-    }
-
-    public void addLoanId(Long loanId) {
-        loanIds.add(loanId);
-    }
-
+    // Getters och setters
     public Long getBorrowerId() {
         return borrowerId;
     }
@@ -70,6 +73,14 @@ public class Borrower {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Long> getLoanIds() {
+        return loanIds;
+    }
+
+    public void setLoanIds(List<Long> loanIds) {
+        this.loanIds = loanIds;
     }
 
     public Set<Book> getBooks() {

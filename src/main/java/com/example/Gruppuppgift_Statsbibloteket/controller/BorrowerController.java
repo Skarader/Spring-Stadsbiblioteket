@@ -35,8 +35,8 @@ public class BorrowerController {
 
     @PostMapping
     public ResponseEntity<Borrower> createBorrower(@RequestBody Borrower borrower) {
-        Borrower createdBorrower = borrowerService.saveBorrower(borrower);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdBorrower);
+        Borrower savedBorrower = borrowerService.saveBorrower(borrower);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedBorrower);
     }
 
     @DeleteMapping("/{id}")
