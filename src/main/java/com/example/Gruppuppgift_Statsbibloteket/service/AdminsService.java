@@ -9,7 +9,9 @@ import com.example.Gruppuppgift_Statsbibloteket.repository.AdminsRepository;
 import com.example.Gruppuppgift_Statsbibloteket.repository.BookRepository;
 import com.example.Gruppuppgift_Statsbibloteket.service.BookService;
 import com.example.Gruppuppgift_Statsbibloteket.repository.UserRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,7 +38,7 @@ public class AdminsService {
             return userRepository.save(newUser);
         }
         else {
-           throw new SecurityException("Test");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied");
         }
     }
 
@@ -46,7 +48,7 @@ public class AdminsService {
             return bookService.createBook(bookDTO);
         }
         else {
-            throw new SecurityException("Test");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied");
         }
     }
 
@@ -55,7 +57,7 @@ public class AdminsService {
         if (admin.isPresent()) {
             return this.bookService.getBorrowedBooks();
         }else {
-            throw new SecurityException("Test");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied");
         }
 
     }
@@ -65,7 +67,7 @@ public class AdminsService {
         if (admin.isPresent()) {
             return this.bookService.updateBook(id, bookDTO);
         }else {
-            throw new SecurityException("Test");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied");
         }
     }
 
