@@ -1,13 +1,11 @@
 package com.example.Gruppuppgift_Statsbibloteket.service;
 
-import com.example.Gruppuppgift_Statsbibloteket.Dto.AdminUpdateBookDTO;
 import com.example.Gruppuppgift_Statsbibloteket.Dto.BookDTO;
 import com.example.Gruppuppgift_Statsbibloteket.model.Admins;
 import com.example.Gruppuppgift_Statsbibloteket.model.Book;
 import com.example.Gruppuppgift_Statsbibloteket.model.Users;
 import com.example.Gruppuppgift_Statsbibloteket.repository.AdminsRepository;
-import com.example.Gruppuppgift_Statsbibloteket.repository.BookRepository;
-import com.example.Gruppuppgift_Statsbibloteket.service.BookService;
+
 import com.example.Gruppuppgift_Statsbibloteket.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -34,9 +32,8 @@ public class AdminsService {
         Optional<Admins> admin = adminsRepository.findByUsernameAndPassword(username, password);
         if (admin.isPresent()) {
             return userRepository.save(newUser);
-        }
-        else {
-           throw new SecurityException("Test");
+        } else {
+            throw new SecurityException("Test");
         }
     }
 
@@ -44,8 +41,7 @@ public class AdminsService {
         Optional<Admins> admin = adminsRepository.findByUsernameAndPassword(username, password);
         if (admin.isPresent()) {
             return bookService.createBook(bookDTO);
-        }
-        else {
+        } else {
             throw new SecurityException("Test");
         }
     }
@@ -54,7 +50,7 @@ public class AdminsService {
         Optional<Admins> admin = adminsRepository.findByUsernameAndPassword(username, password);
         if (admin.isPresent()) {
             return this.bookService.getBorrowedBooks();
-        }else {
+        } else {
             throw new SecurityException("Test");
         }
 
@@ -64,10 +60,9 @@ public class AdminsService {
         Optional<Admins> admin = adminsRepository.findByUsernameAndPassword(username, password);
         if (admin.isPresent()) {
             return this.bookService.updateBook(id, bookDTO);
-        }else {
+        } else {
             throw new SecurityException("Test");
         }
     }
-
 
 }

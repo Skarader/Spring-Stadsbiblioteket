@@ -1,6 +1,5 @@
 package com.example.Gruppuppgift_Statsbibloteket.Dto;
 
-import com.example.Gruppuppgift_Statsbibloteket.model.Book;
 import lombok.Getter;
 import lombok.Setter;
 
