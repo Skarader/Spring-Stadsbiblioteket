@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/admins")
 public class AdminsController {
     private final AdminsService adminsService;
     private final LoanService loanService;
@@ -22,12 +23,12 @@ public class AdminsController {
         this.loanService = loanService;
     }
 
-    @GetMapping("/admins")
+    @GetMapping
     public List<Admins> getAllAdmins() {
         return adminsService.getAllAdmins();
     }
 
-    @PostMapping("/admins/create/user")
+    @PostMapping("/create/user")
     public Users createUser(@RequestBody AdminAddUserDTO request) {
         return adminsService.createUser(
                 request.getNewUser(),
@@ -36,7 +37,7 @@ public class AdminsController {
         );
     }
 
-    @PostMapping("/admins/create/book")
+    @PostMapping("/create/book")
     public Book createBook(@RequestBody AdminAddBookDTO request) {
         return adminsService.createBook(
                 request.getNewBook(),
@@ -45,17 +46,17 @@ public class AdminsController {
         );
     }
 
-    @GetMapping("/admins/{username}/{password}/borrowed-books")
+    @GetMapping("/{username}/{password}/borrowed-books")
     public List<Book> getBorrowedBooks(@PathVariable String username, @PathVariable String password) {
         return adminsService.getBorrowedBooks(username, password);
     }
 
-    @PutMapping("/admins/{username}/{password}/update/book/{id}")
+    @PutMapping("/{username}/{password}/update/book/{id}")
     public Book updateBook(@PathVariable String username, @PathVariable String password, @PathVariable Long id, @RequestBody BookDTO bookDTO) {
         return adminsService.updateBookInfo(username, password, id, bookDTO);
     }
 
-    @GetMapping("/admins/get-borrowed-books")
+    @GetMapping("/get-borrowed-books")
     public List<AdminGetBorrowedBooks> getBorrowedBooks() {
         return this.loanService.getBorrowedBooksWithUsers();
     }
