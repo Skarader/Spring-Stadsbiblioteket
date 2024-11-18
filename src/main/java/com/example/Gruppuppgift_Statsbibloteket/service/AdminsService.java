@@ -5,6 +5,8 @@ import com.example.Gruppuppgift_Statsbibloteket.model.Admins;
 import com.example.Gruppuppgift_Statsbibloteket.model.Book;
 import com.example.Gruppuppgift_Statsbibloteket.model.Users;
 import com.example.Gruppuppgift_Statsbibloteket.repository.AdminsRepository;
+import com.example.Gruppuppgift_Statsbibloteket.repository.BookRepository;
+import com.example.Gruppuppgift_Statsbibloteket.service.BookService;
 import com.example.Gruppuppgift_Statsbibloteket.repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

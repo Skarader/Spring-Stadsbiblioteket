@@ -119,6 +119,18 @@ public class AuthorService {
     }
 
     public void deleteAuthor(Long id) {
+        // get author by id
+        Author existingAuthor = authorRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Author not found with ID: " + id));
+
+        // check if any of the authors books are loaned out
+        boolean loanedBooks = existingAuthor.getBooks()
+                .stream().anyMatch(book -> !book.getAvailable());
+
+        if (loanedBooks) {
+            throw new ResourceNotFoundException("Cant delete a author with books loaned out!");
+        }
+        // delete author
         authorRepository.deleteById(id);
     }
 }

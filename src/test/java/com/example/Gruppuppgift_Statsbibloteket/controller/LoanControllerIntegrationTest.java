@@ -1,9 +1,9 @@
 package com.example.Gruppuppgift_Statsbibloteket.controller;
 
 import com.example.Gruppuppgift_Statsbibloteket.Dto.UserLoanDto;
-import com.example.Gruppuppgift_Statsbibloteket.model.Book;
+
 import com.example.Gruppuppgift_Statsbibloteket.model.Loan;
-import com.example.Gruppuppgift_Statsbibloteket.model.Users;
+
 import com.example.Gruppuppgift_Statsbibloteket.service.LoanService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
-import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -56,8 +55,8 @@ public class LoanControllerIntegrationTest {
 
         // When & Then
         mockMvc.perform(post("/loans")
-                        .contentType("application/json")
-                        .content("{\"userId\":1, \"bookId\":1, \"loanDate\":\"2024-11-17\", \"dueDate\":\"2024-12-17\"}"))
+                .contentType("application/json")
+                .content("{\"userId\":1, \"bookId\":1, \"loanDate\":\"2024-11-17\", \"dueDate\":\"2024-12-17\"}"))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.userId").value(userId))
                 .andExpect(jsonPath("$.bookId").value(bookId))
@@ -75,8 +74,8 @@ public class LoanControllerIntegrationTest {
 
         // When & Then
         mockMvc.perform(post("/loans")
-                        .contentType("application/json")
-                        .content("{\"userId\":1, \"bookId\":1, \"loanDate\":\"2024-11-17\", \"dueDate\":\"2024-12-17\"}"))
+                .contentType("application/json")
+                .content("{\"userId\":1, \"bookId\":1, \"loanDate\":\"2024-11-17\", \"dueDate\":\"2024-12-17\"}"))
                 .andExpect(status().isNotFound());
 
         verify(loanService, times(1)).createLoan(any(UserLoanDto.class));
@@ -90,8 +89,8 @@ public class LoanControllerIntegrationTest {
 
         // When & Then
         mockMvc.perform(post("/loans")
-                        .contentType("application/json")
-                        .content("{\"userId\":1, \"bookId\":1, \"loanDate\":\"2024-11-17\", \"dueDate\":\"2024-12-17\"}"))
+                .contentType("application/json")
+                .content("{\"userId\":1, \"bookId\":1, \"loanDate\":\"2024-11-17\", \"dueDate\":\"2024-12-17\"}"))
                 .andExpect(status().isNotFound());
 
         verify(loanService, times(1)).createLoan(any(UserLoanDto.class));

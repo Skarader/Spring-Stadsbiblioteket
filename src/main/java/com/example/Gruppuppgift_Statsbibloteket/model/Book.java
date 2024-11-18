@@ -45,6 +45,10 @@ public class Book {
     @JsonManagedReference
     private Set<BooksGenres> booksGenres = new HashSet<>();
 
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private Set<Loan> loans = new HashSet<>();
+
     public Book() {
     }
 
