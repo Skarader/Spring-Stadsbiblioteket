@@ -13,7 +13,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.ResultMatcher;
 
 import static net.bytebuddy.matcher.ElementMatchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -36,6 +35,9 @@ public class AdminControllerIntegrationTest {
 
     @BeforeEach
     void setUp() {
+        bookRepository.deleteAll();
+        adminsRepository.deleteAll();
+
         Admins admin = new Admins();
         admin.setRole("ADMIN");
         admin.setUsername("eddie");
@@ -60,7 +62,7 @@ public class AdminControllerIntegrationTest {
                           "newBook": {
                             "title": "Test Book",
                             "publicationYear": 2024,
-                            "authorId": 2,
+                            "authorId": 1,
                             "available": true,
                             "bookGenreIds": [2]
                           }
@@ -69,8 +71,35 @@ public class AdminControllerIntegrationTest {
 
         response.andExpect(status().isOk())
                 .andExpect(jsonPath("$.title", is("Test Book")).hasJsonPath())
-                .andExpect(jsonPath("$.publicationYear", is(2024)).hasJsonPath())
-                .andDo(print());
+                .andExpect(jsonPath("$.publicationYear", is(2024)).hasJsonPath());
+    }
+
+    @Test
+    void createBookFailIfAdminIsNotPresent() throws Exception {
+        AdminAddBookDTO adminAddBookDTO = new AdminAddBookDTO();
+
+        adminAddBookDTO.setNewBook(new BookDTO());
+        adminAddBookDTO.setUsername("eddie2");
+        adminAddBookDTO.setPassword("abc1234");
+
+        ResultActions response = mockMvc.perform(post("/admins/create/book")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("""
+                        {
+                        "username": "wrong username",
+                        "password": "wrong password",
+                          "newBook": {
+                            "title": "Test Book2",
+                            "publicationYear": 2024,
+                            "authorId": 2,
+                            "available": true,
+                            "bookGenreIds": [1]
+                          }
+                        }
+                        """)
+                );
+
+                response.andExpect(status().isForbidden());
     }
 
 
