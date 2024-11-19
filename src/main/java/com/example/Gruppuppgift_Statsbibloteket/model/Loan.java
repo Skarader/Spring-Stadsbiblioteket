@@ -1,5 +1,6 @@
 package com.example.Gruppuppgift_Statsbibloteket.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;  // Import the annotation
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
@@ -19,9 +20,11 @@ public class Loan {
     private Long userId;
 
     @Column(name = "Loan_date", nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")  // Added JsonFormat here
     private LocalDate loanDate;
 
     @Column(name = "Due_date", nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")  // Added JsonFormat here
     private LocalDate dueDate;
 
     @Column(name = "Returned_date")

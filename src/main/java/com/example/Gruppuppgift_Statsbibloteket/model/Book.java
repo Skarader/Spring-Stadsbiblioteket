@@ -54,4 +54,12 @@ public class Book {
     @ManyToMany(mappedBy = "books", fetch = FetchType.LAZY)
     @JsonBackReference
     private Set<Borrower> borrowers = new HashSet<>();
+
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private Set<Loan> loans = new HashSet<>();
+
+    public Book() {
+    }
+
 }

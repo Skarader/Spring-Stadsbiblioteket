@@ -72,13 +72,3 @@ public class BookControllerIntegrationTest {
     }
 
 }
-
-// mockMvc.perform(get("/books/{id}", 999L)
-// .accept(MediaType.APPLICATION_JSON))
-// .andExpect(status().isNotFound());
-
-// private String firstName;
-// private String lastName;
-// private LocalDate birthDate;
-
-// 25 June 1903

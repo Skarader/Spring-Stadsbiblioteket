@@ -128,7 +128,18 @@ public class BookService {
 
     // DELETE BOOK BY ID
     public void deleteBook(Long id) {
+        // get book with id
+        Book existingBook = bookRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Book not found with ID: " + id));
+
+        // check if book is loaned out
+        if (!existingBook.getAvailable()) {
+            throw new ResourceNotFoundException("cant delete a book thats currently loaned out!");
+        }
+
+        // delete book
         bookRepository.deleteById(id);
+
     }
 
     public List<Book> getBorrowedBooks() {

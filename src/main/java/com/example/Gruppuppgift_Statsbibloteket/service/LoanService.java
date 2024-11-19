@@ -1,5 +1,6 @@
 package com.example.Gruppuppgift_Statsbibloteket.service;
 
+import com.example.Gruppuppgift_Statsbibloteket.Dto.AdminGetBorrowedBooks;
 import com.example.Gruppuppgift_Statsbibloteket.Dto.UserLoanDto;
 import com.example.Gruppuppgift_Statsbibloteket.model.Book;
 import com.example.Gruppuppgift_Statsbibloteket.model.Loan;
@@ -48,5 +49,25 @@ public class LoanService {
 
     public List<Loan> getAllLoans() {
         return loanRepository.findAll();
+    }
+
+    public Optional<Loan> returnBook(Long loanId) {
+        Optional<Loan> loan = loanRepository.findById(loanId);
+        if (loan.isPresent()) {
+
+            Long bookId = loan.get().getBookId();
+            Optional<Book> book = bookRepository.findById(bookId);
+            if (book.isPresent()) {
+                book.get().setAvailable(true);
+            }
+
+            loanRepository.deleteById(loanId);
+
+        }
+        return loan;
+    }
+
+    public List<AdminGetBorrowedBooks> getBorrowedBooksWithUsers() {
+        return loanRepository.findBorrowedBooksWithUser();
     }
 }
