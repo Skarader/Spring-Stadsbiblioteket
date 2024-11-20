@@ -14,16 +14,12 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.ResponseEntity;
 
 import com.example.Gruppuppgift_Statsbibloteket.model.Book;
-import com.example.Gruppuppgift_Statsbibloteket.service.AuthorService;
 import com.example.Gruppuppgift_Statsbibloteket.service.BookService;
 
 public class BookControllerUnitTest {
 
     @Mock
     private BookService bookService;
-
-    @Mock
-    private AuthorService authorService;
 
     @InjectMocks
     private BookController bookController;
