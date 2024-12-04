@@ -14,8 +14,13 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long user_id;
-    private String first_name;
+
+    @Column(name = "first_name")
+    private String name;
+
+    @Column(name = "last_name")
     private String last_name;
+
     private String email;
     private String member_number;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -24,8 +29,8 @@ public class Users {
     public Users() {
     }
 
-    public Users(String first_name, String last_name, String email, String member_number) {
-        this.first_name = first_name;
+    public Users(String name, String last_name, String email, String member_number) {
+        this.name = name;
         this.last_name = last_name;
         this.email = email;
         this.member_number = member_number;

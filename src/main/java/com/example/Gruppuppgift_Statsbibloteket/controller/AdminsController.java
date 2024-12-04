@@ -9,6 +9,9 @@ import com.example.Gruppuppgift_Statsbibloteket.model.Book;
 import com.example.Gruppuppgift_Statsbibloteket.model.Users;
 import com.example.Gruppuppgift_Statsbibloteket.service.AdminsService;
 import com.example.Gruppuppgift_Statsbibloteket.service.LoanService;
+
+import jakarta.websocket.server.PathParam;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +21,7 @@ import java.util.List;
 public class AdminsController {
     private final AdminsService adminsService;
     private final LoanService loanService;
+
     public AdminsController(AdminsService adminsService, LoanService loanService) {
         this.adminsService = adminsService;
         this.loanService = loanService;
@@ -33,8 +37,7 @@ public class AdminsController {
         return adminsService.createUser(
                 request.getNewUser(),
                 request.getUsername(),
-                request.getPassword()
-        );
+                request.getPassword());
     }
 
     @PostMapping("/create/book")
@@ -42,8 +45,7 @@ public class AdminsController {
         return adminsService.createBook(
                 request.getNewBook(),
                 request.getUsername(),
-                request.getPassword()
-        );
+                request.getPassword());
     }
 
     @GetMapping("/{username}/{password}/borrowed-books")
@@ -52,7 +54,8 @@ public class AdminsController {
     }
 
     @PutMapping("/{username}/{password}/update/book/{id}")
-    public Book updateBook(@PathVariable String username, @PathVariable String password, @PathVariable Long id, @RequestBody BookDTO bookDTO) {
+    public Book updateBook(@PathVariable String username, @PathVariable String password, @PathVariable Long id,
+            @RequestBody BookDTO bookDTO) {
         return adminsService.updateBookInfo(username, password, id, bookDTO);
     }
 
@@ -60,4 +63,18 @@ public class AdminsController {
     public List<AdminGetBorrowedBooks> getBorrowedBooks() {
         return this.loanService.getBorrowedBooksWithUsers();
     }
+
+    @PostMapping("/test")
+    public String createAdmin(@RequestParam String username, @RequestParam String password, String role) {
+        adminsService.createAdmin(username, password, "ADMIN");
+
+        return "yes";
+
+    }
+
+    @DeleteMapping("/delete-test")
+    public void deleteAdmins() {
+        adminsService.deleteAdmins();
+    }
+
 }

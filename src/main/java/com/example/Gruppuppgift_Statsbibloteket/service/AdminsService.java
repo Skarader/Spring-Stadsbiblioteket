@@ -9,6 +9,7 @@ import com.example.Gruppuppgift_Statsbibloteket.repository.BookRepository;
 import com.example.Gruppuppgift_Statsbibloteket.service.BookService;
 import com.example.Gruppuppgift_Statsbibloteket.repository.UserRepository;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -20,11 +21,14 @@ public class AdminsService {
     private final AdminsRepository adminsRepository;
     private final UserRepository userRepository;
     private final BookService bookService;
+    private PasswordEncoder passwordEncoder;
 
-    public AdminsService(AdminsRepository adminsRepository, UserRepository userRepository, BookService bookService) {
+    public AdminsService(AdminsRepository adminsRepository, UserRepository userRepository, BookService bookService,
+            PasswordEncoder passwordEncoder) {
         this.adminsRepository = adminsRepository;
         this.userRepository = userRepository;
         this.bookService = bookService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<Admins> getAllAdmins() {
@@ -35,8 +39,7 @@ public class AdminsService {
         Optional<Admins> admin = adminsRepository.findByUsernameAndPassword(username, password);
         if (admin.isPresent()) {
             return userRepository.save(newUser);
-        }
-        else {
+        } else {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied");
         }
     }
@@ -45,17 +48,25 @@ public class AdminsService {
         Optional<Admins> admin = adminsRepository.findByUsernameAndPassword(username, password);
         if (admin.isPresent()) {
             return bookService.createBook(bookDTO);
-        }
-        else {
+        } else {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied");
         }
+    }
+
+    public Admins createAdmin(String username, String rawPassword, String role) {
+        Admins admin = new Admins();
+        admin.setUsername(username);
+        admin.setPassword(passwordEncoder.encode(rawPassword));
+        admin.setRole(role);
+
+        return adminsRepository.save(admin);
     }
 
     public List<Book> getBorrowedBooks(String username, String password) {
         Optional<Admins> admin = adminsRepository.findByUsernameAndPassword(username, password);
         if (admin.isPresent()) {
             return this.bookService.getBorrowedBooks();
-        }else {
+        } else {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied");
         }
 
@@ -65,10 +76,13 @@ public class AdminsService {
         Optional<Admins> admin = adminsRepository.findByUsernameAndPassword(username, password);
         if (admin.isPresent()) {
             return this.bookService.updateBook(id, bookDTO);
-        }else {
+        } else {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied");
         }
     }
 
+    public void deleteAdmins() {
+        adminsRepository.deleteAll();
+    }
 
 }

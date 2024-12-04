@@ -32,18 +32,18 @@ public class UserService {
             Users user = userOptional.get();
 
             user.setEmail(updatedUser.getEmail());
-            user.setFirst_name(updatedUser.getFirst_name());
+            user.setName(updatedUser.getName());
             user.setLast_name(updatedUser.getLast_name());
 
-            if(updatedUser.getUser_id() == null) {
+            if (updatedUser.getUser_id() == null) {
                 user.setUser_id(user.getUser_id());
             }
 
-            if(updatedUser.getLoans() == null) {
+            if (updatedUser.getLoans() == null) {
                 user.setLoans(user.getLoans());
             }
 
-            if(updatedUser.getMember_number() == null) {
+            if (updatedUser.getMember_number() == null) {
                 user.setMember_number(user.getMember_number());
             }
 

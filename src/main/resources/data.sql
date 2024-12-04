@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS loans (
 CREATE TABLE IF NOT EXISTS admins (
     admin_id BIGINT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(50) NOT NULL UNIQUE,
-    password VARCHAR(50) NOT NULL,
+    password VARCHAR(500) NOT NULL,
     role VARCHAR(20) NOT NULL
 );
 -- Clear existing data
@@ -180,6 +180,8 @@ VALUES (2, 1, '2024-01-15', '2024-02-15', NULL),
     (6, 1, '2023-12-25', '2024-01-25', '2024-01-23');
 -- Populate admins
 INSERT INTO admins (username, password, role)
-VALUES ('admin', 'admin123', 'ADMIN'),
-    ('lisa', 'lisa123', 'LIBRARIAN'),
-    ('lars', 'lars123', 'LIBRARIAN');
+VALUES (
+        'admin',
+        '$2a$10$Ki7lPZHiWobCj5o/HD7Ikew0PFS6A/lsPKKcXhbzElMa93vEDXexW',
+        'ADMIN'
+    )
