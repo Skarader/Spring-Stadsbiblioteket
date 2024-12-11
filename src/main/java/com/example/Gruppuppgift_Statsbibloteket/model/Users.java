@@ -21,8 +21,18 @@ public class Users {
     @Column(name = "last_name")
     private String last_name;
 
+    @Column(name = "email")
     private String email;
+
+    @Column(name = "member_number")
     private String member_number;
+
+    @Column(name = "username", unique = true)
+    private String username;
+
+    @Column(name = "password")
+    private String password;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Loan> loans;
 

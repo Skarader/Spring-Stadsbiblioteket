@@ -29,7 +29,9 @@ CREATE TABLE IF NOT EXISTS users (
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
-    member_number VARCHAR(10) NOT NULL UNIQUE
+    member_number VARCHAR(10) NOT NULL UNIQUE,
+    username VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(100) NOT NULL
 );
 CREATE TABLE IF NOT EXISTS loans (
     loan_id BIGINT PRIMARY KEY AUTO_INCREMENT,
@@ -132,38 +134,50 @@ INSERT INTO users (
         first_name,
         last_name,
         email,
-        member_number
+        member_number,
+        username,
+        password
     )
 VALUES (
         'Anna',
         'Andersson',
         'anna.andersson@email.com',
-        'M20230001'
-    ),
-    (
-        'Erik',
-        'Eriksson',
-        'erik.eriksson@email.com',
-        'M20230002'
-    ),
-    (
-        'Maria',
-        'Svensson',
-        'maria.svensson@email.com',
-        'M20230003'
-    ),
-    (
-        'Johan',
-        'Johansson',
-        'johan.johansson@email.com',
-        'M20230004'
-    ),
-    (
-        'Eva',
-        'Larsson',
-        'eva.larsson@email.com',
-        'M20230005'
-    );
+        'M20230001',
+           'anna.andersson',
+           'password123'
+       ),
+       (
+           'Erik',
+           'Eriksson',
+           'erik.eriksson@email.com',
+           'M20230002',
+           'erik.eriksson',
+           'password123'
+       ),
+       (
+           'Maria',
+           'Svensson',
+           'maria.svensson@email.com',
+           'M20230003',
+           'maria.svensson',
+           'password123'
+       ),
+       (
+           'Johan',
+           'Johansson',
+           'johan.johansson@email.com',
+           'M20230004',
+           'johan.johansson',
+           'password123'
+       ),
+       (
+           'Eva',
+           'Larsson',
+           'eva.larsson@email.com',
+           'M20230005',
+           'eva.larsson',
+           'password123'
+       );
 -- Populate loans
 INSERT INTO loans (
         book_id,

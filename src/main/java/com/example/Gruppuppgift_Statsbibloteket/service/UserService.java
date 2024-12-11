@@ -3,18 +3,22 @@ package com.example.Gruppuppgift_Statsbibloteket.service;
 import com.example.Gruppuppgift_Statsbibloteket.model.Users;
 import com.example.Gruppuppgift_Statsbibloteket.repository.UserRepository;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.net.PasswordAuthentication;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<Users> getAllUsers() {
@@ -53,4 +57,15 @@ public class UserService {
         }
     }
 
+    public Users registerUser(String first_name, String last_name, String email, String memeber_number, String userName, String rawPassword){
+        Users user = new Users();
+        user.setEmail(email);
+        user.setName(first_name);
+        user.setLast_name(last_name);
+        user.setMember_number(memeber_number);
+        user.setUsername(userName);
+        user.setPassword(passwordEncoder.encode(rawPassword));
+
+        return userRepository.save(user);
+    }
 }
