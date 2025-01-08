@@ -21,6 +21,11 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    @GetMapping("/public")
+    public String publik() {
+        return "open";
+    }
+
     @GetMapping("/{id}")
     public Optional<Users> getUserById(@PathVariable Long id) {
         return userService.getUserById(id);
