@@ -1,5 +1,6 @@
 package com.example.Gruppuppgift_Statsbibloteket.service;
 
+import com.example.Gruppuppgift_Statsbibloteket.Dto.RegisterUserDTO;
 import com.example.Gruppuppgift_Statsbibloteket.model.Users;
 import com.example.Gruppuppgift_Statsbibloteket.repository.UserRepository;
 import org.springframework.http.HttpStatus;
@@ -57,15 +58,14 @@ public class UserService {
         }
     }
 
-    public Users registerUser(String first_name, String last_name, String email, String memeber_number, String userName, String rawPassword){
-        Users user = new Users();
-        user.setEmail(email);
-        user.setName(first_name);
-        user.setLast_name(last_name);
-        user.setMember_number(memeber_number);
-        user.setUsername(userName);
-        user.setPassword(passwordEncoder.encode(rawPassword));
-
-        return userRepository.save(user);
+    public Users registerUser(Users newUser/*String first_name, String last_name, String email, String memeber_number, String userName, String rawPassword*/){
+        //Users user = new Users();
+        //user.setName(newUser.getName());
+        //user.setLast_name(newUser.getLast_name());
+        //user.setEmail(newUser.getEmail());
+        //user.setMember_number(newUser.getMember_number());
+        //user.setUsername(newUser.getUsername());
+        newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
+        return userRepository.save(newUser);
     }
 }

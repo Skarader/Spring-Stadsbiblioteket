@@ -31,7 +31,9 @@ CREATE TABLE IF NOT EXISTS users (
     email VARCHAR(255) NOT NULL UNIQUE,
     member_number VARCHAR(10) NOT NULL UNIQUE,
     username VARCHAR(100) NOT NULL UNIQUE,
-    password VARCHAR(100) NOT NULL
+    password VARCHAR(100) NOT NULL,
+    role VARCHAR(20) NOT NULL
+
 );
 CREATE TABLE IF NOT EXISTS loans (
     loan_id BIGINT PRIMARY KEY AUTO_INCREMENT,
@@ -136,23 +138,27 @@ INSERT INTO users (
         email,
         member_number,
         username,
-        password
+        password,
+        role
+
     )
 VALUES (
         'Anna',
         'Andersson',
         'anna.andersson@email.com',
         'M20230001',
-           'anna.andersson',
-           'password123'
-       ),
+        'anna.andersson',
+        'password123',
+        'USER'
+),
        (
            'Erik',
            'Eriksson',
            'erik.eriksson@email.com',
            'M20230002',
            'erik.eriksson',
-           'password123'
+           'password123',
+           'USER'
        ),
        (
            'Maria',
@@ -160,7 +166,8 @@ VALUES (
            'maria.svensson@email.com',
            'M20230003',
            'maria.svensson',
-           'password123'
+           'password123',
+           'USER'
        ),
        (
            'Johan',
@@ -168,7 +175,8 @@ VALUES (
            'johan.johansson@email.com',
            'M20230004',
            'johan.johansson',
-           'password123'
+           'password123',
+           'USER'
        ),
        (
            'Eva',
@@ -176,7 +184,8 @@ VALUES (
            'eva.larsson@email.com',
            'M20230005',
            'eva.larsson',
-           'password123'
+           'password123',
+           'LIBRARIAN'
        );
 -- Populate loans
 INSERT INTO loans (

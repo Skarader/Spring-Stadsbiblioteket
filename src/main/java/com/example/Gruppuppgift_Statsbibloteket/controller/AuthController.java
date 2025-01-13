@@ -1,7 +1,9 @@
 package com.example.Gruppuppgift_Statsbibloteket.controller;
 
 
+import com.example.Gruppuppgift_Statsbibloteket.Dto.RegisterUserDTO;
 import com.example.Gruppuppgift_Statsbibloteket.JWTUtil;
+import com.example.Gruppuppgift_Statsbibloteket.model.Users;
 import com.example.Gruppuppgift_Statsbibloteket.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -36,9 +38,9 @@ public class AuthController {
 
         //en endpoint för att registrera nya användare
         @PostMapping("/register")
-        public String register(@RequestParam String first_name, @RequestParam String last_name, @RequestParam String email, @RequestParam String member_number, @RequestParam String username, @RequestParam String password){
-            userService.registerUser(first_name, last_name, email, member_number, username, password);
-            return "user registered successfully";
+        public String register(@RequestBody Users newUser /*@RequestParam String first_name, @RequestParam String last_name, @RequestParam String email, @RequestParam String member_number, @RequestParam String username, @RequestParam String password*/){
+            userService.registerUser(newUser);
+            return "User created";
         }
 
         @PostMapping("/login")

@@ -33,6 +33,9 @@ public class Users {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "role")
+    private String role;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Loan> loans;
 
