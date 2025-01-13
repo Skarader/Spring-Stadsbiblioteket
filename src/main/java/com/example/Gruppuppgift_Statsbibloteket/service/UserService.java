@@ -56,22 +56,9 @@ public class UserService {
         }
     }
 
-    public Users registerUser(Users newUser/*String first_name, String last_name, String email, String memeber_number, String userName, String rawPassword*/){
-        //Users user = new Users();
-        //user.setName(newUser.getName());
-        //user.setLast_name(newUser.getLast_name());
-        //user.setEmail(newUser.getEmail());
-        //user.setMember_number(newUser.getMember_number());
-        //user.setUsername(newUser.getUsername());
+    public Users registerUser(Users newUser){
         String rawPassword = newUser.getPassword();
-        if (rawPassword == null || rawPassword.isEmpty()) {
-            throw new IllegalArgumentException("Password cannot be null or empty");
-        }
-
-
-        // Kryptera lösenordet
-        //newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
-        passwordEncoder.encode(rawPassword);
+        newUser.setPassword(passwordEncoder.encode(rawPassword));
         return userRepository.save(newUser);
     }
 }

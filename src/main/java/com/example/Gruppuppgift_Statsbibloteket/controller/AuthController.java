@@ -36,7 +36,7 @@ public class AuthController {
 
         //en endpoint för att registrera nya användare
         @PostMapping("/register")
-        public String register(@RequestBody Users newUser /*@RequestParam String first_name, @RequestParam String last_name, @RequestParam String email, @RequestParam String member_number, @RequestParam String username, @RequestParam String password*/){
+        public String register(@RequestBody Users newUser){
             userService.registerUser(newUser);
             return "User created";
         }
