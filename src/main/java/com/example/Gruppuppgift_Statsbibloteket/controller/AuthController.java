@@ -1,12 +1,10 @@
 package com.example.Gruppuppgift_Statsbibloteket.controller;
 
 
-import com.example.Gruppuppgift_Statsbibloteket.Dto.RegisterUserDTO;
 import com.example.Gruppuppgift_Statsbibloteket.JWTUtil;
 import com.example.Gruppuppgift_Statsbibloteket.model.Users;
 import com.example.Gruppuppgift_Statsbibloteket.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;

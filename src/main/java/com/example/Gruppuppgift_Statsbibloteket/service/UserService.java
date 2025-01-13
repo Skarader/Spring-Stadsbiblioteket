@@ -1,6 +1,5 @@
 package com.example.Gruppuppgift_Statsbibloteket.service;
 
-import com.example.Gruppuppgift_Statsbibloteket.Dto.RegisterUserDTO;
 import com.example.Gruppuppgift_Statsbibloteket.model.Users;
 import com.example.Gruppuppgift_Statsbibloteket.repository.UserRepository;
 import org.springframework.http.HttpStatus;
@@ -8,7 +7,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.net.PasswordAuthentication;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,7 +63,15 @@ public class UserService {
         //user.setEmail(newUser.getEmail());
         //user.setMember_number(newUser.getMember_number());
         //user.setUsername(newUser.getUsername());
-        newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
+        String rawPassword = newUser.getPassword();
+        if (rawPassword == null || rawPassword.isEmpty()) {
+            throw new IllegalArgumentException("Password cannot be null or empty");
+        }
+
+
+        // Kryptera lösenordet
+        //newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
+        passwordEncoder.encode(rawPassword);
         return userRepository.save(newUser);
     }
 }
