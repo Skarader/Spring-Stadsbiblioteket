@@ -33,7 +33,6 @@ CREATE TABLE IF NOT EXISTS users (
     username VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(100) NOT NULL,
     role VARCHAR(20) NOT NULL
-
 );
 CREATE TABLE IF NOT EXISTS loans (
     loan_id BIGINT PRIMARY KEY AUTO_INCREMENT,
@@ -140,53 +139,43 @@ INSERT INTO users (
         username,
         password,
         role
-
     )
 VALUES (
-        'Anna',
-        'Andersson',
-        'anna.andersson@email.com',
-        'M20230001',
-        'anna.andersson',
-        'password123',
+        'Lukas',
+        'Holm-Wolf',
+        'lukas.holmwolf@email.com',
+        'MN000001',
+        'lukas',
+        '$2a$10$thGsg1wtIgn4eVHQsWhPK.9DFnpF4dNIPgBSWTsgcF48R0/Rx/XK2',
         'USER'
-),
-       (
-           'Erik',
-           'Eriksson',
-           'erik.eriksson@email.com',
-           'M20230002',
-           'erik.eriksson',
-           'password123',
-           'USER'
-       ),
-       (
-           'Maria',
-           'Svensson',
-           'maria.svensson@email.com',
-           'M20230003',
-           'maria.svensson',
-           'password123',
-           'USER'
-       ),
-       (
-           'Johan',
-           'Johansson',
-           'johan.johansson@email.com',
-           'M20230004',
-           'johan.johansson',
-           'password123',
-           'USER'
-       ),
-       (
-           'Eva',
-           'Larsson',
-           'eva.larsson@email.com',
-           'M20230005',
-           'eva.larsson',
-           'password123',
-           'LIBRARIAN'
-       );
+    ),
+    (
+        'Valon',
+        'Ahmeti',
+        'valon.ahmeti@email.com',
+        'MN000002',
+        'valon',
+        '$2a$10$vPOC6Tvrk1vycf3fVzNKc.WReDrknrlSMSfxozTgo40ivHKSUf.ea',
+        'USER'
+    ),
+    (
+        'Eddie',
+        'Möllerström',
+        'eddie.mollerstrom@email.com',
+        'MN000003',
+        'eddie',
+        '$2a$10$VS7VVEDGoUKm6BeK0TVFV.GJmzvD.oHDVCEFjcSAHWJwv4ix759SC',
+        'USER'
+    ),
+    (
+        'Amelia',
+        'Matthiesen',
+        'amelia.matthiesen@email.com',
+        'MN000004',
+        'amelia',
+        '$2a$10$llY0Wc.nU7dIGJols1cIDum5RQzb7l4Z9zi86wFkwW6ShrWe3HVyS',
+        'USER'
+    );
 -- Populate loans
 INSERT INTO loans (
         book_id,
@@ -199,7 +188,7 @@ VALUES (2, 1, '2024-01-15', '2024-02-15', NULL),
     (5, 2, '2024-01-20', '2024-02-20', NULL),
     (9, 3, '2024-01-25', '2024-02-25', NULL),
     (1, 4, '2023-12-15', '2024-01-15', '2024-01-14'),
-    (3, 5, '2023-12-20', '2024-01-20', '2024-01-18'),
+    (3, 4, '2023-12-20', '2024-01-20', '2024-01-18'),
     (6, 1, '2023-12-25', '2024-01-25', '2024-01-23');
 -- Populate admins
 INSERT INTO admins (username, password, role)

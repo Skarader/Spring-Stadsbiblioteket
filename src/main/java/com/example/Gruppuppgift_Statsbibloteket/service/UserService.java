@@ -56,7 +56,7 @@ public class UserService {
         }
     }
 
-    public Users registerUser(Users newUser){
+    public Users registerUser(Users newUser) {
         String rawPassword = newUser.getPassword();
         newUser.setPassword(passwordEncoder.encode(rawPassword));
         return userRepository.save(newUser);
