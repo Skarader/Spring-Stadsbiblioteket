@@ -1,6 +1,5 @@
 package com.example.Gruppuppgift_Statsbibloteket.controller;
 
-
 import com.example.Gruppuppgift_Statsbibloteket.JWTUtil;
 import com.example.Gruppuppgift_Statsbibloteket.model.Admins;
 import com.example.Gruppuppgift_Statsbibloteket.model.Users;
@@ -25,9 +24,9 @@ public class AuthController {
     private final UserDetailsService userDetailsService;
     private final AdminsRepository adminsRepository;
 
-
     @Autowired
-    public AuthController(UserService userService, JWTUtil jwtUtil, AuthenticationManager authenticationManager, UserDetailsService userDetailsService, AdminsRepository adminsRepository) {
+    public AuthController(UserService userService, JWTUtil jwtUtil, AuthenticationManager authenticationManager,
+            UserDetailsService userDetailsService, AdminsRepository adminsRepository) {
         this.userService = userService;
         this.jwtUtil = jwtUtil;
         this.authenticationManager = authenticationManager;
@@ -35,30 +34,24 @@ public class AuthController {
         this.adminsRepository = adminsRepository;
     }
 
-
-    //en endpoint för att registrera nya användare
+    // en endpoint för att registrera nya användare
     @PostMapping("/register")
-    public String register(@RequestBody Users newUser){
+    public String register(@RequestBody Users newUser) {
         userService.registerUser(newUser);
         return "User created";
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam String username, @RequestParam String password){
-        try{
+    public String login(@RequestParam String username, @RequestParam String password) {
+        try {
             authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(username,password)
-            );
+                    new UsernamePasswordAuthenticationToken(username, password));
 
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-            System.out.println("hej " + userDetails.getAuthorities());
             return jwtUtil.generateToken(userDetails.getUsername());
-            } catch(AuthenticationException e){
-                return "invalid credentials";
-            }
+        } catch (AuthenticationException e) {
+            return "invalid credentials";
         }
+    }
 }
-
-
-

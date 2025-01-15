@@ -29,7 +29,6 @@ public class BookController {
 
     // GET ALL BOOKS
     @GetMapping
-    @PreAuthorize("hasRole('LIBRARIAN')")
     public ResponseEntity<List<Book>> getAllBooks() {
         List<Book> books = bookService.getAllBooks();
         return new ResponseEntity<>(books, HttpStatus.OK);
@@ -64,6 +63,7 @@ public class BookController {
 
     // CREATE NEW BOOK
     @PostMapping
+    @PreAuthorize("hasAnyRole('LIBRARIAN', 'ADMIN')")
     public ResponseEntity<Book> createBook(@RequestBody BookDTO bookDTO) {
         Book createdBook = bookService.createBook(bookDTO);
         return new ResponseEntity<>(createdBook, HttpStatus.CREATED);
@@ -72,6 +72,7 @@ public class BookController {
 
     // UPDATE BOOK BY ID
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('LIBRARIAN', 'ADMIN')")
     public ResponseEntity<Book> updateBook(@PathVariable Long id, @RequestBody BookDTO bookDTO) {
         Book updatedBook = bookService.updateBook(id, bookDTO);
         return new ResponseEntity<>(updatedBook, HttpStatus.OK);
@@ -80,6 +81,7 @@ public class BookController {
 
     // DELETE BOOK BY ID
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('LIBRARIAN', 'ADMIN')")
     public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
         bookService.deleteBook(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

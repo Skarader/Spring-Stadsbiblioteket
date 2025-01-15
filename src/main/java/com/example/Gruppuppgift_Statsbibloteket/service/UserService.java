@@ -61,4 +61,8 @@ public class UserService {
         newUser.setPassword(passwordEncoder.encode(rawPassword));
         return userRepository.save(newUser);
     }
+
+    public void deleteUserById(Long id) {
+        userRepository.deleteById(id);
+    }
 }

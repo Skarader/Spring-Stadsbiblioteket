@@ -12,6 +12,7 @@ import com.example.Gruppuppgift_Statsbibloteket.service.LoanService;
 
 import jakarta.websocket.server.PathParam;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,15 +33,8 @@ public class AdminsController {
         return adminsService.getAllAdmins();
     }
 
-    @PostMapping("/create/user")
-    public Users createUser(@RequestBody AdminAddUserDTO request) {
-        return adminsService.createUser(
-                request.getNewUser(),
-                request.getUsername(),
-                request.getPassword());
-    }
-
     @PostMapping("/create/book")
+    @PreAuthorize("hasAnyRole('LIBRARIAN', 'ADMIN')")
     public Book createBook(@RequestBody AdminAddBookDTO request) {
         return adminsService.createBook(
                 request.getNewBook(),
@@ -49,32 +43,22 @@ public class AdminsController {
     }
 
     @GetMapping("/{username}/{password}/borrowed-books")
+    @PreAuthorize("hasAnyRole('LIBRARIAN', 'ADMIN')")
     public List<Book> getBorrowedBooks(@PathVariable String username, @PathVariable String password) {
         return adminsService.getBorrowedBooks(username, password);
     }
 
     @PutMapping("/{username}/{password}/update/book/{id}")
+    @PreAuthorize("hasAnyRole('LIBRARIAN', 'ADMIN')")
     public Book updateBook(@PathVariable String username, @PathVariable String password, @PathVariable Long id,
             @RequestBody BookDTO bookDTO) {
         return adminsService.updateBookInfo(username, password, id, bookDTO);
     }
 
     @GetMapping("/get-borrowed-books")
+    @PreAuthorize("hasAnyRole('LIBRARIAN', 'ADMIN')")
     public List<AdminGetBorrowedBooks> getBorrowedBooks() {
         return this.loanService.getBorrowedBooksWithUsers();
-    }
-
-    @PostMapping("/test")
-    public String createAdmin(@RequestParam String username, @RequestParam String password, String role) {
-        adminsService.createAdmin(username, password, "ADMIN");
-
-        return "yes";
-
-    }
-
-    @DeleteMapping("/delete-test")
-    public void deleteAdmins() {
-        adminsService.deleteAdmins();
     }
 
 }

@@ -2,6 +2,8 @@ package com.example.Gruppuppgift_Statsbibloteket.controller;
 
 import com.example.Gruppuppgift_Statsbibloteket.model.Users;
 import com.example.Gruppuppgift_Statsbibloteket.service.UserService;
+
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,22 +19,26 @@ public class UserController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('LIBRARIAN', 'ADMIN')")
     public List<Users> getAllUsers() {
         return userService.getAllUsers();
     }
 
-    @GetMapping("/public")
-    public String publik() {
-        return "open";
-    }
-
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('LIBRARIAN', 'ADMIN')")
     public Optional<Users> getUserById(@PathVariable Long id) {
         return userService.getUserById(id);
     }
 
     @PatchMapping("/update/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public void updateUser(@PathVariable Long id, @RequestBody Users user) {
         userService.updateUser(id, user);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public void deleteUser(@PathVariable Long id) {
+        userService.deleteUserById(id);
     }
 }
