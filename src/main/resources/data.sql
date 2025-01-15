@@ -144,7 +144,7 @@ VALUES (
         'Lukas',
         'Holm-Wolf',
         'lukas.holmwolf@email.com',
-        'MN000001',
+        'MN0001',
         'lukas',
         '$2a$10$thGsg1wtIgn4eVHQsWhPK.9DFnpF4dNIPgBSWTsgcF48R0/Rx/XK2',
         'USER'
@@ -153,7 +153,7 @@ VALUES (
         'Valon',
         'Ahmeti',
         'valon.ahmeti@email.com',
-        'MN000002',
+        'MN0002',
         'valon',
         '$2a$10$vPOC6Tvrk1vycf3fVzNKc.WReDrknrlSMSfxozTgo40ivHKSUf.ea',
         'USER'
@@ -162,7 +162,7 @@ VALUES (
         'Eddie',
         'Möllerström',
         'eddie.mollerstrom@email.com',
-        'MN000003',
+        'MN0003',
         'eddie',
         '$2a$10$VS7VVEDGoUKm6BeK0TVFV.GJmzvD.oHDVCEFjcSAHWJwv4ix759SC',
         'USER'
@@ -171,7 +171,7 @@ VALUES (
         'Amelia',
         'Matthiesen',
         'amelia.matthiesen@email.com',
-        'MN000004',
+        'MN0004',
         'amelia',
         '$2a$10$llY0Wc.nU7dIGJols1cIDum5RQzb7l4Z9zi86wFkwW6ShrWe3HVyS',
         'USER'

@@ -1,6 +1,10 @@
 package com.example.Gruppuppgift_Statsbibloteket.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,21 +19,29 @@ public class Users {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long user_id;
 
+    @NotBlank(message = "Firstname cannot be blank")
     @Column(name = "first_name")
     private String name;
 
+    @NotBlank(message = "Lastname cannot be blank")
     @Column(name = "last_name")
     private String last_name;
 
-    @Column(name = "email")
+    @NotBlank(message = "Email cannot be blank")
+    @Column(name = "email", unique = true)
     private String email;
 
-    @Column(name = "member_number")
+    @Column(name = "member_number", unique = true)
     private String member_number;
 
+    @NotBlank(message = "username cannot be blank")
+    @Size(min = 6, max = 30, message = "usernmae must be atleast 6 chars and max 30 chars")
+    @Pattern(regexp = "^(?=.*[A-Z])[A-Za-z]+$", message = "Username must include one uppercase letter, username can only include letters")
     @Column(name = "username", unique = true)
     private String username;
 
+    @NotBlank(message = "password cannot be blank")
+    @Size(min = 6, message = "Password must be atleast 6 chars long")
     @Column(name = "password")
     private String password;
 

@@ -5,12 +5,16 @@ import com.example.Gruppuppgift_Statsbibloteket.model.Admins;
 import com.example.Gruppuppgift_Statsbibloteket.model.Users;
 import com.example.Gruppuppgift_Statsbibloteket.repository.AdminsRepository;
 import com.example.Gruppuppgift_Statsbibloteket.service.UserService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -36,7 +40,7 @@ public class AuthController {
 
     // en endpoint för att registrera nya användare
     @PostMapping("/register")
-    public String register(@RequestBody Users newUser) {
+    public String register(@Valid @RequestBody Users newUser) {
         userService.registerUser(newUser);
         return "User created";
     }
