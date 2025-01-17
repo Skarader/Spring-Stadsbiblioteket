@@ -21,8 +21,6 @@ public class JWTUtil {
     // skapar en token
     public String generateToken(String userName) {
 
-        // Jwts.builder lägger till de fält vi vill ha med i vår token och signerar med
-        // vår nyckel
         String token = Jwts.builder()
                 .setSubject(userName)
                 .setIssuedAt(new Date())
@@ -30,15 +28,13 @@ public class JWTUtil {
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
                 .compact();
 
-        // OBS .signWith() är deprecated och man föreslår att använda en parserBuilder
+        // signWith() är deprecated, använd en parserBuilder
         // för att hantera signering ist.
-        // Fördelen med parserBuilder är att den är threadsafe och mutable, men inget
-        // som kommer göra skillnad i våra exempel.
-        // men helt klart värt att kolla upp för framtida projekt
 
         return token;
     }
 
+    // plocka ut username från token
     public String extractUserName(String token) {
 
         String name = Jwts.parser()
@@ -65,9 +61,7 @@ public class JWTUtil {
     // kollar om token är giltig
     public boolean isValid(String token, String userName) {
 
-        // HR ÄR BOVEN FRÅN LEKTIONEN. Jag hade skickat in userName ist för token i
-        // metoden
-        final String extractedName = extractUserName(token); // final String extractedName = extractUserName(userName);
+        final String extractedName = extractUserName(token);
         return extractedName.equals(userName) && !isTokenExpired(token);
 
     }
